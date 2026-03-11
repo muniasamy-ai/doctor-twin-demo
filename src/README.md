@@ -45,3 +45,13 @@ curl -X POST http://localhost:8000/api/v1/check \
 Response includes `response` (answer script), `scenario_id`, `matches`, `safety_triggered`.
 
 See project root **README.md** for full steps and examples.
+
+## Project structure (database)
+
+- **`app/db/`** — Versioned migrations in `app/db/migrations/versions/` (e.g. `001_initial_schema.py`). Run with `python -m scripts.run_migrations` or as part of `init_db`.
+- **`app/repositories/`** — DB connection (`engine.py`) and schema/SQL (`models.py`).
+- **`scripts/`** — `create_db`, `run_migrations`, `init_db` (migrations + seed), `migrate_db` (export/import).
+
+## Migrating the database
+
+To move or clone the PostgreSQL + pgvector database (e.g. to another server), see **[MIGRATION.md](./MIGRATION.md)**. It covers dump/restore, versioned migrations, and the `scripts/migrate_db.py` export/import helper.

@@ -1,4 +1,4 @@
-"""PostgreSQL + pgvector connection."""
+"""PostgreSQL + pgvector connection (production engine)."""
 from __future__ import annotations
 
 from contextlib import contextmanager
@@ -7,7 +7,7 @@ import psycopg2
 from psycopg2.extras import RealDictCursor
 from pgvector.psycopg2 import register_vector
 
-from .config import get_settings
+from app.core.config import get_settings
 
 EMBEDDING_DIM = 1536
 

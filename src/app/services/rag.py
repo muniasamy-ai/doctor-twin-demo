@@ -9,15 +9,15 @@ from typing import Any
 from openai import OpenAI
 
 from app.core.config import get_settings, SCENARIOS_JSON_PATH
-from app.core.database import get_connection
-from app.models.scenario import (
+from app.repositories.engine import get_connection
+from app.repositories.models import (
+    INSERT_SQL,
     ScenarioRow,
     scenario_from_row,
-    INSERT_SQL,
-    SELECT_BY_VECTOR_SQL,
-    SELECT_BY_VECTOR_WITH_INTENT_SQL,
     SELECT_BY_KEYWORD_SQL,
     SELECT_BY_KEYWORD_WITH_INTENT_SQL,
+    SELECT_BY_VECTOR_SQL,
+    SELECT_BY_VECTOR_WITH_INTENT_SQL,
 )
 
 log = logging.getLogger(__name__)
