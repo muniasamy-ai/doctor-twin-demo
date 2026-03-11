@@ -21,7 +21,8 @@ python -m scripts.init_db
 python -m uvicorn app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
-Use **`python -m uvicorn`** so the venv’s Python (and its installed `psycopg2-binary`, `pgvector`) is used; plain `uvicorn` can cause `ModuleNotFoundError: No module named 'psycopg2'` in the reloader subprocess.
+- Activate the venv first so `python` is available. If you see `command not found: python`, use **`python3 -m scripts.init_db`** or **`.venv/bin/python -m scripts.init_db`**.
+- Use **`python -m uvicorn`** so the venv’s Python (and its installed `psycopg2-binary`, `pgvector`) is used; plain `uvicorn` can cause `ModuleNotFoundError: No module named 'psycopg2'` in the reloader subprocess.
 
 ## See the table
 
