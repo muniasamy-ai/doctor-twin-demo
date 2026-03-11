@@ -1,14 +1,22 @@
 """Application configuration — env-based."""
 from __future__ import annotations
 
+import os
 from pathlib import Path
 from functools import lru_cache
 
+from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 _APP_ROOT = Path(__file__).resolve().parent.parent.parent
 _PROJECT_ROOT = _APP_ROOT.parent
 SCENARIOS_JSON_PATH = _PROJECT_ROOT / "data" / "scenarios.json"
+
+# Load .env from project root (doctor-twin-demo/.env) then cwd (e.g. src/.env)
+_load_env = _PROJECT_ROOT / ".env"
+if _load_env.exists():
+    load_dotenv(_load_env)
+load_dotenv()
 
 
 class Settings(BaseSettings):
@@ -22,7 +30,7 @@ class Settings(BaseSettings):
     app_name: str = "Scenario RAG API"
     debug: bool = False
 
-    openai_api_key: str = ""
+    openai_api_key: str = ""  # Set OPENAI_API_KEY in .env only — never hardcode
     embedding_model: str = "text-embedding-3-small"
     chat_model: str = "gpt-4o-mini"
 

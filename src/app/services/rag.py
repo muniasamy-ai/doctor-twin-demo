@@ -26,16 +26,30 @@ log = logging.getLogger(__name__)
 RRF_K = 60
 
 
+def _trigger_string_for_db(scenario: dict[str, Any]) -> str:
+    """Normalize trigger/triggers to a single string for DB storage."""
+    triggers = scenario.get("triggers")
+    if isinstance(triggers, list) and triggers:
+        return " | ".join(str(t).strip() for t in triggers if t)
+    return str(scenario.get("trigger") or "")
+
+
 def _chunk_text(scenario: dict[str, Any]) -> str:
     """
     One chunk = one full scenario (scenario-level chunking).
     Includes all fields for accurate vector + keyword retrieval.
+    Uses triggers (list) when present so each phrase improves vector search.
     """
+    triggers = scenario.get("triggers") or scenario.get("trigger")
+    if isinstance(triggers, list):
+        trigger_part = "Triggers: " + "; ".join(str(t) for t in triggers if t)
+    else:
+        trigger_part = f"Trigger: {triggers or ''}"
     parts = [
         f"SCENARIO ID: {scenario.get('scenario_id', '')}",
         f"Intent: {scenario.get('intent', '')}",
         f"Risk: {scenario.get('risk', '')}",
-        f"Trigger: {scenario.get('trigger', '')}",
+        trigger_part,
         f"Script: {scenario.get('script', '')}",
         f"Actions: {', '.join(scenario.get('actions') or [])}",
     ]
@@ -213,7 +227,7 @@ class RAGService:
                             s.get("scenario_id", ""),
                             s.get("intent", ""),
                             s.get("risk", ""),
-                            s.get("trigger", ""),
+                            _trigger_string_for_db(s),
                             s.get("script", ""),
                             json.dumps(s.get("actions") or []),
                             s.get("hard_stop"),
