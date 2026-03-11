@@ -1,0 +1,426 @@
+[
+  {
+    "scenario_id": "REC-SCHED-001",
+    "intent": "schedule_appointment",
+    "risk": "low",
+    "trigger": "I need to see the doctor / want to make an appointment / need a follow-up",
+    "script": "Of course — I can help schedule that. Is this for a new concern or a follow-up? What is the main reason for the visit? I have availability on Tuesday at 10:30 AM or Thursday at 2:00 PM. Which works better for you? Perfect — I've scheduled you for Tuesday at 10:30 AM. You'll receive a confirmation message shortly. If anything changes, you can reply 'RESCHEDULE' or call us.",
+    "actions": ["Book via EMR API", "Trigger SMS/email confirmation", "Schedule reminder (24h + optional 2h)"],
+    "hard_stop": "If patient mentions chest pain, shortness of breath, stroke symptoms: I'm concerned this may be urgent. Please call 911 or go to the nearest emergency room.",
+    "metadata": {
+      "intent": "schedule_appointment",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    },
+    "required_data": ["Full name", "DOB", "Callback number", "Reason for visit", "Preferred days/times"]
+  },
+  {
+    "scenario_id": "REC-SCHED-002",
+    "intent": "reschedule_cancel",
+    "risk": "low",
+    "trigger": "I can't make it / I need to change my appointment",
+    "script": "No problem — would you like to reschedule or cancel? If reschedule, same live scheduling logic. If cancel, remove appointment and confirm.",
+    "actions": ["Modify EMR schedule", "Send confirmation update"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "reschedule_cancel",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-SYMPTOM-001",
+    "intent": "symptom_intake_routing",
+    "risk": "variable",
+    "trigger": "Patient says I'm not feeling well",
+    "script": "I'm sorry you're not feeling well. Can you describe what's happening in one sentence? When did it start? Are you having chest pain, shortness of breath, severe pain, weakness, or fainting? If no red flags: I can schedule you for evaluation. If red flag: emergency script.",
+    "actions": ["Route to triage queue OR urgent scheduling slot"],
+    "hard_stop": "If red flag symptoms: route to emergency script.",
+    "metadata": {
+      "intent": "symptom_intake_routing",
+      "risk_level": "variable",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-RX-001",
+    "intent": "pharmacy_refill_request",
+    "risk": "low",
+    "trigger": "Pharmacy calls for routine refill",
+    "script": "Thank you — I'll process this request. You'll receive confirmation once reviewed.",
+    "actions": ["Send to refill engine", "Create refill task", "Log pharmacy request"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharmacy_refill_request",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    },
+    "required_data": ["Pharmacy name", "NPI/store number", "Patient name + DOB", "Medication name"]
+  },
+  {
+    "scenario_id": "REC-RX-002",
+    "intent": "controlled_substance_early_refill",
+    "risk": "high",
+    "trigger": "Controlled substance early refill request",
+    "script": "For controlled medications, the physician must review early refill requests. I'll route this for review.",
+    "actions": ["Escalate to physician queue immediately"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "controlled_substance_early_refill",
+      "risk_level": "high",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-RX-003",
+    "intent": "patient_medication_refill",
+    "risk": "low",
+    "trigger": "Patient requests medication refill via portal or call",
+    "script": "Which medication are you requesting? Which pharmacy should we send it to? If eligible (per refill logic) → auto-approve. If not → route to physician.",
+    "actions": ["Run refill safety validation engine"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "patient_medication_refill",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-REF-001",
+    "intent": "referral_request_medicare_ppo",
+    "risk": "low",
+    "trigger": "Referral request (Medicare/PPO)",
+    "script": "May I ask which specialist you'd like to see and the reason for referral? If Medicare/PPO: I'll generate your referral and send it to you securely.",
+    "actions": ["Generate referral PDF", "Send to patient", "Log as completed"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "referral_request_medicare_ppo",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-REF-002",
+    "intent": "referral_request_hmo",
+    "risk": "low",
+    "trigger": "Referral request (HMO)",
+    "script": "HMO referrals require insurance authorization. I'll submit this for processing and notify you once approved.",
+    "actions": ["Create referral task for Office Manager", "Status: Pending Authorization"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "referral_request_hmo",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-BILL-001",
+    "intent": "billing_question",
+    "risk": "low",
+    "trigger": "Billing question",
+    "script": "Are you calling about an invoice, copay/deductible, or a refund? What was the date of service?",
+    "actions": ["Route to Biller Brain queue"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "billing_question",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-REC-001",
+    "intent": "records_school_form_request",
+    "risk": "low",
+    "trigger": "Records or school form request",
+    "script": "I can help with that. Would you like this sent through the secure portal? If school/work form → verify identity.",
+    "actions": ["Send secure upload link", "Create records request task", "Track completion"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "records_school_form_request",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "MA-LAB-001",
+    "intent": "abnormal_lab_callback",
+    "risk": "moderate",
+    "trigger": "Lab marked abnormal but not critical, physician marked OK to notify",
+    "script": "Hi, this is calling from Soliman Care. Your recent lab results showed some values slightly outside the normal range. The doctor recommends a follow-up visit to review and discuss next steps. If patient asks details: The doctor will review everything with you during the appointment.",
+    "actions": ["Offer appointment", "Document patient notified", "Attach lab result to visit"],
+    "hard_stop": "If patient reports new severe symptoms → escalate.",
+    "metadata": {
+      "intent": "abnormal_lab_callback",
+      "risk_level": "moderate",
+      "department": "medical_assistant",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "MA-LAB-002",
+    "intent": "critical_lab_result",
+    "risk": "high",
+    "trigger": "Lab flagged critical",
+    "script": "This is urgent. The doctor needs to speak with you immediately. If unreachable: Call x3, Send urgent SMS: Please contact the office immediately. If symptoms present: Please go to the nearest emergency room.",
+    "actions": ["Notify physician immediately", "Log attempt times", "Mark as high-priority task"],
+    "hard_stop": "If symptoms present: Please go to the nearest emergency room.",
+    "metadata": {
+      "intent": "critical_lab_result",
+      "risk_level": "high",
+      "department": "medical_assistant",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-005",
+    "intent": "urgent_symptoms_triage",
+    "risk": "high",
+    "trigger": "Urgent symptoms reported",
+    "script": "Please describe what's happening. If chest pain, SOB, stroke symptoms: This may be an emergency. Please call 911 immediately. If non-emergent: Offer urgent same-day visit.",
+    "actions": ["Emergency escalation or urgent scheduling"],
+    "hard_stop": "If chest pain, shortness of breath, stroke symptoms: This may be an emergency. Please call 911 immediately.",
+    "metadata": {
+      "intent": "urgent_symptoms_triage",
+      "risk_level": "high",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "RX-ROUTINE-001",
+    "intent": "routine_refill",
+    "risk": "low",
+    "trigger": "Chronic medication, same dose, same pharmacy, seen within 12 months, labs not critically overdue",
+    "script": "Your refill has been sent to your pharmacy. Please let us know if you notice any side effects.",
+    "actions": ["Send refill (standard quantity)", "Notify via SMS/email", "Log audit trail", "Passive physician notification"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "routine_refill",
+      "risk_level": "low",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-LABS-002",
+    "intent": "refill_overdue_labs",
+    "risk": "moderate",
+    "trigger": "Labs required for medication monitoring, labs overdue but not critical",
+    "script": "I've sent a short refill to keep you covered. Please complete your lab work as soon as possible to continue safely.",
+    "actions": ["Send 30–90 day refill", "Place lab order", "Send lab reminder", "Log as short refill due to labs"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "refill_overdue_labs",
+      "risk_level": "moderate",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-VISIT-003",
+    "intent": "refill_overdue_visit",
+    "risk": "moderate",
+    "trigger": "Last visit >12 months, stable chronic medication",
+    "script": "I've sent a short refill and scheduled a reminder for your follow-up visit to keep everything on track.",
+    "actions": ["Send limited refill", "Offer scheduling", "Flag visit overdue", "Log decision"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "refill_overdue_visit",
+      "risk_level": "moderate",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-CONTROL-004",
+    "intent": "controlled_substance_refill",
+    "risk": "high",
+    "trigger": "Controlled medication: opioid, benzodiazepine, stimulant, sleep med",
+    "script": "Controlled medications require direct physician review. I've routed your request for prompt attention. No timeline guarantees.",
+    "actions": ["Create high-priority refill task", "Notify physician", "Do NOT auto-approve", "Log request"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "controlled_substance_refill",
+      "risk_level": "high",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-CONTROL-001",
+    "intent": "controlled_refill_request",
+    "risk": "high",
+    "trigger": "I need my Xanax early / Can you refill my pain medication",
+    "script": "For controlled medications, the doctor must review each request individually. I'll route this for review right away. No promise. No timing guarantees.",
+    "actions": ["Create High-Priority Refill Task", "Tag as Controlled", "Notify physician queue"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "controlled_refill_request",
+      "risk_level": "high",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-BRIDGE-005",
+    "intent": "short_bridge_refill",
+    "risk": "moderate",
+    "trigger": "Patient out of medication, follow-up pending, condition high-risk (HTN, CAD, DM, thyroid)",
+    "script": "I've sent a short refill to prevent interruption. Let's schedule your follow-up to review your care plan.",
+    "actions": ["Send 30-day refill", "Auto-schedule reminder", "Flag continuity safeguard", "Log bridge refill"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "short_bridge_refill",
+      "risk_level": "moderate",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-DENY-006",
+    "intent": "denied_refill",
+    "risk": "variable",
+    "trigger": "Medication inappropriate, labs critically overdue, visit severely overdue, controlled early refill",
+    "script": "This refill requires physician review to ensure safety. We'll follow up with next steps. If inappropriate: This medication cannot be refilled without an updated evaluation.",
+    "actions": ["Escalate to physician", "Offer visit scheduling", "Log denial reason"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "denied_refill",
+      "risk_level": "variable",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-PHARM-008",
+    "intent": "pharmacy_change_request",
+    "risk": "low",
+    "trigger": "I changed pharmacies / Pharmacy closure",
+    "script": "Thank you for the update. I'll send your prescription to the new pharmacy.",
+    "actions": ["Update pharmacy in EMR", "Resend prescription", "Log change"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharmacy_change_request",
+      "risk_level": "low",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    },
+    "required_data": ["New pharmacy name", "Address or store number", "Phone number"]
+  },
+  {
+    "scenario_id": "MA-RX-002",
+    "intent": "medication_side_effect_report",
+    "risk": "moderate",
+    "trigger": "Patient reports medication side effects",
+    "script": "I'm sorry you're experiencing that. When did this start? Are you having trouble breathing, severe swelling, chest pain, or fainting? If severe → emergency escalation. If mild: I'll notify the doctor so we can advise you safely.",
+    "actions": ["Create urgent clinical task", "Flag medication in chart"],
+    "hard_stop": "If trouble breathing, severe swelling, chest pain, fainting: Please call 911 or go to the nearest emergency room.",
+    "metadata": {
+      "intent": "medication_side_effect_report",
+      "risk_level": "moderate",
+      "department": "medical_assistant",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-001",
+    "intent": "general_medical_question",
+    "risk": "variable",
+    "trigger": "I have a question about my condition / Can I ask the doctor something",
+    "script": "I'm happy to help route your question. May I confirm your full name and date of birth? Can you briefly describe your question? If purely administrative → route to correct department. If clinical: I'll send this to the clinical team for review.",
+    "actions": ["Create clinical message task"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "general_medical_question",
+      "risk_level": "variable",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-003",
+    "intent": "lab_result_inquiry",
+    "risk": "low",
+    "trigger": "Patient asks about lab results",
+    "script": "I'll check whether your results have been reviewed. If reviewed & non-critical: The doctor has reviewed them. I can schedule a visit to discuss. If pending: Your results are still pending review.",
+    "actions": ["Check result status", "Schedule if needed"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "lab_result_inquiry",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-006",
+    "intent": "after_hours_call",
+    "risk": "variable",
+    "trigger": "Call outside office hours",
+    "script": "Our office is currently closed. If this is a medical emergency, call 911. If non-emergent: I'll forward this to the on-call provider.",
+    "actions": ["Create after-hours task"],
+    "hard_stop": "If medical emergency: call 911.",
+    "metadata": {
+      "intent": "after_hours_call",
+      "risk_level": "variable",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-009",
+    "intent": "prescription_refill_request_phone",
+    "risk": "low",
+    "trigger": "Patient calls requesting prescription refill",
+    "script": "Which medication and which pharmacy? Run refill safety logic.",
+    "actions": ["Run refill safety logic", "Process or route refill"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "prescription_refill_request_phone",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    }
+  },
+  {
+    "scenario_id": "PA-001",
+    "intent": "prior_authorization_required",
+    "risk": "moderate",
+    "trigger": "Pharmacy rejection / CoverMyMeds alert",
+    "script": "Your medication requires insurance authorization. We are working on this and will keep you updated.",
+    "actions": ["Pull chart data (ICD-10, prior meds, labs)", "Pre-fill CoverMyMeds", "Create PA task", "Status: Submitted"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "prior_authorization_required",
+      "risk_level": "moderate",
+      "department": "prior_auth",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-ELIG-001",
+    "intent": "eligibility_verification",
+    "risk": "low",
+    "trigger": "Insurance eligibility verification",
+    "script": "To verify your benefits, I'll need the insurance member ID and group number. May I send a secure link for you to upload a photo of your insurance card?",
+    "actions": ["Create eligibility task", "Notify staff queue"],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "eligibility_verification",
+      "risk_level": "low",
+      "department": "reception",
+      "brain": "receptionist"
+    },
+    "required_data": ["Insurance carrier", "Member ID", "Group number", "Subscriber DOB"]
+  }
+]
