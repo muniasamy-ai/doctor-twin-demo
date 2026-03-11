@@ -1,7 +1,6 @@
 """Classify user question into scenario intent for accurate retrieval."""
 from __future__ import annotations
 
-import json
 import logging
 from openai import OpenAI
 

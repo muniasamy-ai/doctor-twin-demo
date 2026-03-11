@@ -1,10 +1,12 @@
-"""Scenario model: DB row <-> scenario dict."""
+"""Scenario table schema and row mapping (production models)."""
 from __future__ import annotations
 
 import json
 from typing import Any
 
-from app.core.database import EMBEDDING_DIM
+from app.repositories.engine import EMBEDDING_DIM
+
+SCENARIOS_TABLE = "scenario_chunks"
 
 
 class ScenarioRow:
@@ -50,6 +52,7 @@ class ScenarioRow:
         self.chunk_text = chunk_text
         self.created_at = created_at
 
+
 def scenario_from_row(row: dict) -> ScenarioRow:
     """Build ScenarioRow from DB row (RealDictCursor)."""
     actions = row.get("actions")
@@ -79,31 +82,7 @@ def scenario_from_row(row: dict) -> ScenarioRow:
     )
 
 
-# SQL: table and index for similarity search
-SCENARIOS_TABLE = "scenario_chunks"
-CREATE_EXTENSION_SQL = "CREATE EXTENSION IF NOT EXISTS vector;"
-CREATE_TABLE_SQL = f"""
-CREATE TABLE IF NOT EXISTS {SCENARIOS_TABLE} (
-    id SERIAL PRIMARY KEY,
-    scenario_id TEXT UNIQUE NOT NULL,
-    intent TEXT NOT NULL,
-    risk TEXT NOT NULL,
-    trigger TEXT,
-    script TEXT NOT NULL,
-    actions JSONB DEFAULT '[]',
-    hard_stop TEXT,
-    metadata JSONB DEFAULT '{{}}',
-    chunk_text TEXT NOT NULL,
-    embedding vector({EMBEDDING_DIM}) NOT NULL,
-    created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_scenario_chunks_embedding
-ON {SCENARIOS_TABLE}
-USING ivfflat (embedding vector_cosine_ops)
-WITH (lists = 10);
-"""
-
+# SQL used by RAG and seed scripts
 INSERT_SQL = f"""
 INSERT INTO {SCENARIOS_TABLE}
 (scenario_id, intent, risk, trigger, script, actions, hard_stop, metadata, chunk_text, embedding)
@@ -138,7 +117,6 @@ ORDER BY embedding <=> %s::vector
 LIMIT %s;
 """
 
-# Keyword search: PostgreSQL full-text search on chunk_text
 SELECT_BY_KEYWORD_SQL = f"""
 SELECT id, scenario_id, intent, risk, trigger, script, actions, hard_stop, metadata, chunk_text, created_at,
        ts_rank(to_tsvector('english', chunk_text), plainto_tsquery('english', %s)) AS kw_score

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-Create pgvector extension and scenario_chunks table, then seed with scenarios
-from data/scenarios.json (embed with OpenAI text-embedding-3-small).
-Run from repo root or rag_api: python -m scripts.init_db
+Run database migrations, then seed scenario_chunks from data/scenarios.json
+(embed with OpenAI text-embedding-3-small).
+Run from src: python -m scripts.init_db
 """
 from __future__ import annotations
 
@@ -30,25 +30,14 @@ import psycopg2
 from pgvector.psycopg2 import register_vector
 
 from app.core.config import get_settings, SCENARIOS_JSON_PATH
-from app.models.scenario import (
-    CREATE_EXTENSION_SQL,
-    SCENARIOS_TABLE,
-    CREATE_TABLE_SQL,
-    INSERT_SQL,
-)
-from app.services.rag import load_scenarios_json, _chunk_text, get_embedding
+from app.db import run_migrations
+from app.repositories.models import INSERT_SQL, SCENARIOS_TABLE
+from app.services.rag import _chunk_text, get_embedding, load_scenarios_json
 
 
-def create_extension_and_table(conn):
-    with conn.cursor() as cur:
-        cur.execute(CREATE_EXTENSION_SQL)
-        cur.execute(CREATE_TABLE_SQL)
-    conn.commit()
-    print(f"Extension vector and table {SCENARIOS_TABLE} created.")
-
-
-def seed_embeddings(conn, scenarios_path: Path):
+def seed_embeddings(scenarios_path: Path) -> None:
     from openai import OpenAI
+
     settings = get_settings()
     if not settings.openai_api_key:
         raise SystemExit("OPENAI_API_KEY is required. Set it in .env")
@@ -57,13 +46,13 @@ def seed_embeddings(conn, scenarios_path: Path):
 
     if not scenarios_path.exists():
         raise SystemExit(f"Scenarios file not found: {scenarios_path}")
-    with open(scenarios_path, encoding="utf-8") as f:
-        scenarios = json.load(f)
+    scenarios = load_scenarios_json(scenarios_path)
 
+    conn = psycopg2.connect(settings.database_url)
     register_vector(conn)
     cur = conn.cursor()
     try:
-        for i, s in enumerate(scenarios):
+        for s in scenarios:
             chunk = _chunk_text(s)
             emb = get_embedding(client, chunk, model)
             cur.execute(
@@ -83,24 +72,21 @@ def seed_embeddings(conn, scenarios_path: Path):
             )
             print(f"  Indexed {s.get('scenario_id', '?')}")
         conn.commit()
-        print(f"Seeded {len(scenarios)} scenarios.")
+        print(f"Seeded {len(scenarios)} scenarios into {SCENARIOS_TABLE}.")
     finally:
         cur.close()
+        conn.close()
 
 
-def main():
+def main() -> None:
     settings = get_settings()
     try:
-        conn = psycopg2.connect(settings.database_url)
+        run_migrations()
     except Exception as e:
-        print(f"Cannot connect to database: {e}")
-        print("Create the database first, e.g.: createdb scenario_rag")
+        print(f"Migrations failed: {e}")
+        print("Create the database first, e.g.: python -m scripts.create_db")
         sys.exit(1)
-    try:
-        create_extension_and_table(conn)
-        seed_embeddings(conn, SCENARIOS_JSON_PATH)
-    finally:
-        conn.close()
+    seed_embeddings(SCENARIOS_JSON_PATH)
 
 
 if __name__ == "__main__":
