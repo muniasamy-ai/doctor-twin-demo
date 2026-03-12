@@ -13,7 +13,9 @@ from pathlib import Path
 
 # Ensure app is importable
 ROOT = Path(__file__).resolve().parent.parent
-PROJECT_ROOT = ROOT.parent
+print(f"Changing working directory to project root: {ROOT}")
+# PROJECT_ROOT = ROOT.parent
+# print(f"Project root: {PROJECT_ROOT}")
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 os.chdir(ROOT)
@@ -29,7 +31,7 @@ def _load_env(path: Path) -> None:
 
 
 # Load .env from project root first, then src (so doctor-twin-demo/.env is used)
-_load_env(PROJECT_ROOT / ".env")
+_load_env(ROOT / ".env")
 _env = ROOT / ".env"
 if _env.exists():
     _load_env(_env)

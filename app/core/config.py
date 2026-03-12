@@ -8,7 +8,7 @@ from functools import lru_cache
 from dotenv import load_dotenv
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-_APP_ROOT = Path(__file__).resolve().parent.parent.parent
+_APP_ROOT = Path(__file__).resolve().parent.parent
 _PROJECT_ROOT = _APP_ROOT.parent
 SCENARIOS_JSON_PATH = _PROJECT_ROOT / "data" / "scenarios.json"
 
