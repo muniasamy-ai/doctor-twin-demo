@@ -4,26 +4,15 @@ from __future__ import annotations
 import logging
 
 from fastapi import APIRouter, HTTPException, Depends
-from pydantic import BaseModel, Field
 
 from app.core.config import get_settings
+from app.schemas.query import CheckRequest, CheckResponse
 from app.services.intent import classify_intent
 from app.services.rag import RAGService
 from app.services.safety import check_safety
 
 log = logging.getLogger(__name__)
 router = APIRouter()
-
-
-class CheckRequest(BaseModel):
-    question: str = Field(..., min_length=1, max_length=2000)
-
-
-class CheckResponse(BaseModel):
-    response: str = ""
-    scenario_id: str = ""
-    intent: str = ""
-    brain: str = ""
 
 
 def _get_rag() -> RAGService:

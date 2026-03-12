@@ -3,9 +3,18 @@
     "scenario_id": "REC-SCHED-001",
     "intent": "schedule_appointment",
     "risk": "low",
-    "triggers": ["I need to see the doctor", "I want to make an appointment", "I need a follow-up", "book appointment"],
+    "triggers": [
+      "I need to see the doctor",
+      "I want to make an appointment",
+      "I need a follow-up",
+      "book appointment"
+    ],
     "script": "Of course — I can help schedule that. Is this for a new concern or a follow-up? What is the main reason for the visit? I have availability on Tuesday at 10:30 AM or Thursday at 2:00 PM. Which works better for you? Perfect — I've scheduled you for Tuesday at 10:30 AM. You'll receive a confirmation message shortly. If anything changes, you can reply 'RESCHEDULE' or call us.",
-    "actions": ["Book via EMR API", "Trigger SMS/email confirmation", "Schedule reminder (24h + optional 2h)"],
+    "actions": [
+      "Book via EMR API",
+      "Trigger SMS/email confirmation",
+      "Schedule reminder (24h + optional 2h)"
+    ],
     "hard_stop": "If patient mentions chest pain, shortness of breath, stroke symptoms: I'm concerned this may be urgent. Please call 911 or go to the nearest emergency room.",
     "metadata": {
       "intent": "schedule_appointment",
@@ -13,15 +22,29 @@
       "department": "reception",
       "brain": "receptionist"
     },
-    "required_data": ["Full name", "DOB", "Callback number", "Reason for visit", "Preferred days/times"]
+    "required_data": [
+      "Full name",
+      "DOB",
+      "Callback number",
+      "Reason for visit",
+      "Preferred days/times"
+    ]
   },
   {
     "scenario_id": "REC-SCHED-002",
     "intent": "reschedule_cancel",
     "risk": "low",
-    "triggers": ["I can't make it", "I need to change my appointment", "reschedule", "cancel appointment"],
+    "triggers": [
+      "I can't make it",
+      "I need to change my appointment",
+      "reschedule",
+      "cancel appointment"
+    ],
     "script": "No problem — would you like to reschedule or cancel? If reschedule, same live scheduling logic. If cancel, remove appointment and confirm.",
-    "actions": ["Modify EMR schedule", "Send confirmation update"],
+    "actions": [
+      "Modify EMR schedule",
+      "Send confirmation update"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "reschedule_cancel",
@@ -34,9 +57,20 @@
     "scenario_id": "SCH-NEWPT-001",
     "intent": "schedule_appointment",
     "risk": "low",
-    "triggers": ["I'd like to become a new patient", "I want to schedule my first appointment", "first time visiting", "new patient"],
+    "triggers": [
+      "I'd like to become a new patient",
+      "I want to schedule my first appointment",
+      "first time visiting",
+      "new patient"
+    ],
     "script": "Welcome. I'd be happy to help schedule your first visit with Dr. Soliman. What is the main reason for your appointment so we can schedule the appropriate visit type?",
-    "actions": ["Create patient profile", "Schedule appointment", "Send portal enrollment link", "Send intake forms", "Log new patient visit"],
+    "actions": [
+      "Create patient profile",
+      "Schedule appointment",
+      "Send portal enrollment link",
+      "Send intake forms",
+      "Log new patient visit"
+    ],
     "hard_stop": "IF urgent symptoms → route to urgent triage.",
     "metadata": {
       "intent": "schedule_appointment",
@@ -44,15 +78,32 @@
       "department": "scheduling",
       "brain": "scheduling_assistant"
     },
-    "required_data": ["Full name", "Date of birth", "Phone number", "Email", "Insurance type", "Reason for visit"]
+    "required_data": [
+      "Full name",
+      "Date of birth",
+      "Phone number",
+      "Email",
+      "Insurance type",
+      "Reason for visit"
+    ]
   },
   {
     "scenario_id": "SCH-FOLLOW-002",
     "intent": "schedule_appointment",
     "risk": "low",
-    "triggers": ["I need a follow-up visit", "The doctor asked me to return", "follow-up", "follow up"],
+    "triggers": [
+      "I need a follow-up visit",
+      "The doctor asked me to return",
+      "follow-up",
+      "follow up"
+    ],
     "script": "I'd be happy to schedule your follow-up appointment. Would you prefer in-person or telemedicine?",
-    "actions": ["Schedule correct follow-up window", "Attach visit reason", "Confirm appointment", "Send reminder"],
+    "actions": [
+      "Schedule correct follow-up window",
+      "Attach visit reason",
+      "Confirm appointment",
+      "Send reminder"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "schedule_appointment",
@@ -65,9 +116,20 @@
     "scenario_id": "SCH-URGENT-003",
     "intent": "schedule_appointment",
     "risk": "moderate",
-    "triggers": ["Patient reports symptoms requiring same-day evaluation", "fever", "infection symptoms", "acute pain", "same-day appointment", "urgent slot"],
+    "triggers": [
+      "Patient reports symptoms requiring same-day evaluation",
+      "fever",
+      "infection symptoms",
+      "acute pain",
+      "same-day appointment",
+      "urgent slot"
+    ],
     "script": "I understand this may require prompt attention. Let me check for a same-day appointment. IF same-day slot available → schedule urgent visit. IF no slot → escalate to physician or recommend urgent care.",
-    "actions": ["Reserve urgent slot", "Flag urgent reason", "Notify physician if needed"],
+    "actions": [
+      "Reserve urgent slot",
+      "Flag urgent reason",
+      "Notify physician if needed"
+    ],
     "hard_stop": "If emergency symptoms: Please seek immediate care at the emergency room.",
     "metadata": {
       "intent": "schedule_appointment",
@@ -80,9 +142,20 @@
     "scenario_id": "SCH-TELE-004",
     "intent": "schedule_appointment",
     "risk": "low",
-    "triggers": ["Patient requests remote visit", "medication discussion", "follow-up", "lab review", "telemedicine", "video visit"],
+    "triggers": [
+      "Patient requests remote visit",
+      "medication discussion",
+      "follow-up",
+      "lab review",
+      "telemedicine",
+      "video visit"
+    ],
     "script": "We can schedule a telemedicine visit so you can speak with the doctor from home. You will receive a secure video link before the appointment.",
-    "actions": ["Schedule telehealth slot", "Send video instructions", "Send reminder notifications"],
+    "actions": [
+      "Schedule telehealth slot",
+      "Send video instructions",
+      "Send reminder notifications"
+    ],
     "hard_stop": "Not allowed for: physical procedures, physical exams requiring examination.",
     "metadata": {
       "intent": "schedule_appointment",
@@ -95,9 +168,20 @@
     "scenario_id": "SCH-PROC-005",
     "intent": "schedule_appointment",
     "risk": "moderate",
-    "triggers": ["Patient scheduling procedures", "ultrasound", "FibroScan", "minor procedures", "IV therapy", "procedure appointment"],
+    "triggers": [
+      "Patient scheduling procedures",
+      "ultrasound",
+      "FibroScan",
+      "minor procedures",
+      "IV therapy",
+      "procedure appointment"
+    ],
     "script": "I'll schedule your procedure appointment and provide preparation instructions.",
-    "actions": ["Schedule extended appointment slot", "Send preparation instructions", "Verify authorization"],
+    "actions": [
+      "Schedule extended appointment slot",
+      "Send preparation instructions",
+      "Verify authorization"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "schedule_appointment",
@@ -105,15 +189,28 @@
       "department": "scheduling",
       "brain": "scheduling_assistant"
     },
-    "required_data": ["Procedure type", "Preparation instructions", "Insurance authorization if required"]
+    "required_data": [
+      "Procedure type",
+      "Preparation instructions",
+      "Insurance authorization if required"
+    ]
   },
   {
     "scenario_id": "SCH-CANCEL-006",
     "intent": "reschedule_cancel",
     "risk": "low",
-    "triggers": ["I need to cancel my appointment", "cancel appointment", "cancel my visit"],
+    "triggers": [
+      "I need to cancel my appointment",
+      "cancel appointment",
+      "cancel my visit"
+    ],
     "script": "I can cancel that appointment for you. Would you like to reschedule at a different time?",
-    "actions": ["Cancel appointment", "Offer reschedule options", "Update calendar", "Log cancellation reason"],
+    "actions": [
+      "Cancel appointment",
+      "Offer reschedule options",
+      "Update calendar",
+      "Log cancellation reason"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "reschedule_cancel",
@@ -126,9 +223,18 @@
     "scenario_id": "SCH-RESCHED-007",
     "intent": "reschedule_cancel",
     "risk": "low",
-    "triggers": ["I need to move my appointment", "reschedule", "change my appointment time"],
+    "triggers": [
+      "I need to move my appointment",
+      "reschedule",
+      "change my appointment time"
+    ],
     "script": "No problem. Let me check the next available times.",
-    "actions": ["Cancel original appointment", "Schedule new time", "Send updated confirmation", "Log change"],
+    "actions": [
+      "Cancel original appointment",
+      "Schedule new time",
+      "Send updated confirmation",
+      "Log change"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "reschedule_cancel",
@@ -141,9 +247,19 @@
     "scenario_id": "SCH-NOSHOW-008",
     "intent": "reschedule_cancel",
     "risk": "low",
-    "triggers": ["Patient did not arrive for scheduled appointment", "missed appointment", "no-show", "did not show"],
+    "triggers": [
+      "Patient did not arrive for scheduled appointment",
+      "missed appointment",
+      "no-show",
+      "did not show"
+    ],
     "script": "We noticed you missed your appointment today. If you would like to reschedule, we'd be happy to assist.",
-    "actions": ["Mark no-show", "Send follow-up message", "Offer reschedule", "Log event"],
+    "actions": [
+      "Mark no-show",
+      "Send follow-up message",
+      "Offer reschedule",
+      "Log event"
+    ],
     "hard_stop": "If repeated no-shows: flag patient account, apply clinic policy if required.",
     "metadata": {
       "intent": "reschedule_cancel",
@@ -156,9 +272,18 @@
     "scenario_id": "SCH-WAITLIST-009",
     "intent": "schedule_appointment",
     "risk": "low",
-    "triggers": ["Patient wants earlier appointment but schedule is full", "waitlist", "earlier appointment", "schedule is full"],
+    "triggers": [
+      "Patient wants earlier appointment but schedule is full",
+      "waitlist",
+      "earlier appointment",
+      "schedule is full"
+    ],
     "script": "I can place you on the waitlist. If an earlier appointment becomes available, we will notify you.",
-    "actions": ["Add patient to waitlist", "Monitor cancellations", "Send automated notification"],
+    "actions": [
+      "Add patient to waitlist",
+      "Monitor cancellations",
+      "Send automated notification"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "schedule_appointment",
@@ -171,9 +296,16 @@
     "scenario_id": "REC-SYMPTOM-001",
     "intent": "symptom_intake_routing",
     "risk": "variable",
-    "triggers": ["Patient says I'm not feeling well", "I'm not feeling well", "not feeling well", "symptom intake"],
+    "triggers": [
+      "Patient says I'm not feeling well",
+      "I'm not feeling well",
+      "not feeling well",
+      "symptom intake"
+    ],
     "script": "I'm sorry you're not feeling well. Can you describe what's happening in one sentence? When did it start? Are you having chest pain, shortness of breath, severe pain, weakness, or fainting? If no red flags: I can schedule you for evaluation. If red flag: emergency script.",
-    "actions": ["Route to triage queue OR urgent scheduling slot"],
+    "actions": [
+      "Route to triage queue OR urgent scheduling slot"
+    ],
     "hard_stop": "If red flag symptoms: route to emergency script.",
     "metadata": {
       "intent": "symptom_intake_routing",
@@ -186,9 +318,17 @@
     "scenario_id": "REC-RX-001",
     "intent": "pharmacy_refill_request",
     "risk": "low",
-    "triggers": ["Pharmacy calls for routine refill", "pharmacy refill", "pharmacy calling"],
+    "triggers": [
+      "Pharmacy calls for routine refill",
+      "pharmacy refill",
+      "pharmacy calling"
+    ],
     "script": "Thank you — I'll process this request. You'll receive confirmation once reviewed.",
-    "actions": ["Send to refill engine", "Create refill task", "Log pharmacy request"],
+    "actions": [
+      "Send to refill engine",
+      "Create refill task",
+      "Log pharmacy request"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "pharmacy_refill_request",
@@ -196,15 +336,27 @@
       "department": "reception",
       "brain": "receptionist"
     },
-    "required_data": ["Pharmacy name", "NPI/store number", "Patient name + DOB", "Medication name"]
+    "required_data": [
+      "Pharmacy name",
+      "NPI/store number",
+      "Patient name + DOB",
+      "Medication name"
+    ]
   },
   {
     "scenario_id": "REC-RX-002",
     "intent": "controlled_substance_early_refill",
     "risk": "high",
-    "triggers": ["Controlled substance early refill request", "controlled substance", "early refill", "controlled medication"],
+    "triggers": [
+      "Controlled substance early refill request",
+      "controlled substance",
+      "early refill",
+      "controlled medication"
+    ],
     "script": "For controlled medications, the physician must review early refill requests. I'll route this for review.",
-    "actions": ["Escalate to physician queue immediately"],
+    "actions": [
+      "Escalate to physician queue immediately"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "controlled_substance_early_refill",
@@ -217,9 +369,16 @@
     "scenario_id": "REC-RX-003",
     "intent": "patient_medication_refill",
     "risk": "low",
-    "triggers": ["Patient requests medication refill via portal or call", "medication refill", "refill request", "need a refill"],
+    "triggers": [
+      "Patient requests medication refill via portal or call",
+      "medication refill",
+      "refill request",
+      "need a refill"
+    ],
     "script": "Which medication are you requesting? Which pharmacy should we send it to? If eligible (per refill logic) → auto-approve. If not → route to physician.",
-    "actions": ["Run refill safety validation engine"],
+    "actions": [
+      "Run refill safety validation engine"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "patient_medication_refill",
@@ -232,9 +391,19 @@
     "scenario_id": "REC-REF-001",
     "intent": "referral_request_medicare_ppo",
     "risk": "low",
-    "triggers": ["Referral request (Medicare/PPO)", "referral", "Medicare referral", "PPO referral", "see a specialist"],
+    "triggers": [
+      "Referral request (Medicare/PPO)",
+      "referral",
+      "Medicare referral",
+      "PPO referral",
+      "see a specialist"
+    ],
     "script": "May I ask which specialist you'd like to see and the reason for referral? If Medicare/PPO: I'll generate your referral and send it to you securely.",
-    "actions": ["Generate referral PDF", "Send to patient", "Log as completed"],
+    "actions": [
+      "Generate referral PDF",
+      "Send to patient",
+      "Log as completed"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "referral_request_medicare_ppo",
@@ -247,9 +416,16 @@
     "scenario_id": "REC-REF-002",
     "intent": "referral_request_hmo",
     "risk": "low",
-    "triggers": ["Referral request (HMO)", "HMO referral", "referral authorization"],
+    "triggers": [
+      "Referral request (HMO)",
+      "HMO referral",
+      "referral authorization"
+    ],
     "script": "HMO referrals require insurance authorization. I'll submit this for processing and notify you once approved.",
-    "actions": ["Create referral task for Office Manager", "Status: Pending Authorization"],
+    "actions": [
+      "Create referral task for Office Manager",
+      "Status: Pending Authorization"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "referral_request_hmo",
@@ -262,9 +438,18 @@
     "scenario_id": "REC-BILL-001",
     "intent": "billing_question",
     "risk": "low",
-    "triggers": ["Billing question", "billing", "invoice", "copay", "deductible", "refund"],
+    "triggers": [
+      "Billing question",
+      "billing",
+      "invoice",
+      "copay",
+      "deductible",
+      "refund"
+    ],
     "script": "Are you calling about an invoice, copay/deductible, or a refund? What was the date of service?",
-    "actions": ["Route to Biller Brain queue"],
+    "actions": [
+      "Route to Biller Brain queue"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "billing_question",
@@ -277,9 +462,18 @@
     "scenario_id": "REC-REC-001",
     "intent": "records_school_form_request",
     "risk": "low",
-    "triggers": ["Records or school form request", "medical records", "school form", "records request"],
+    "triggers": [
+      "Records or school form request",
+      "medical records",
+      "school form",
+      "records request"
+    ],
     "script": "I can help with that. Would you like this sent through the secure portal? If school/work form → verify identity.",
-    "actions": ["Send secure upload link", "Create records request task", "Track completion"],
+    "actions": [
+      "Send secure upload link",
+      "Create records request task",
+      "Track completion"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "records_school_form_request",
@@ -292,9 +486,18 @@
     "scenario_id": "MA-LAB-001",
     "intent": "abnormal_lab_callback",
     "risk": "moderate",
-    "triggers": ["Lab marked abnormal but not critical", "physician marked OK to notify", "abnormal lab", "lab callback"],
+    "triggers": [
+      "Lab marked abnormal but not critical",
+      "physician marked OK to notify",
+      "abnormal lab",
+      "lab callback"
+    ],
     "script": "Hi, this is calling from Soliman Care. Your recent lab results showed some values slightly outside the normal range. The doctor recommends a follow-up visit to review and discuss next steps. If patient asks details: The doctor will review everything with you during the appointment.",
-    "actions": ["Offer appointment", "Document patient notified", "Attach lab result to visit"],
+    "actions": [
+      "Offer appointment",
+      "Document patient notified",
+      "Attach lab result to visit"
+    ],
     "hard_stop": "If patient reports new severe symptoms → escalate.",
     "metadata": {
       "intent": "abnormal_lab_callback",
@@ -307,9 +510,17 @@
     "scenario_id": "MA-LAB-002",
     "intent": "critical_lab_result",
     "risk": "high",
-    "triggers": ["Lab flagged critical", "critical lab", "urgent lab result"],
+    "triggers": [
+      "Lab flagged critical",
+      "critical lab",
+      "urgent lab result"
+    ],
     "script": "This is urgent. The doctor needs to speak with you immediately. If unreachable: Call x3, Send urgent SMS: Please contact the office immediately. If symptoms present: Please go to the nearest emergency room.",
-    "actions": ["Notify physician immediately", "Log attempt times", "Mark as high-priority task"],
+    "actions": [
+      "Notify physician immediately",
+      "Log attempt times",
+      "Mark as high-priority task"
+    ],
     "hard_stop": "If symptoms present: Please go to the nearest emergency room.",
     "metadata": {
       "intent": "critical_lab_result",
@@ -322,9 +533,18 @@
     "scenario_id": "REC-CALL-005",
     "intent": "urgent_symptoms_triage",
     "risk": "high",
-    "triggers": ["Urgent symptoms reported", "urgent", "emergency", "chest pain", "shortness of breath", "stroke symptoms"],
+    "triggers": [
+      "Urgent symptoms reported",
+      "urgent",
+      "emergency",
+      "chest pain",
+      "shortness of breath",
+      "stroke symptoms"
+    ],
     "script": "Please describe what's happening. If chest pain, SOB, stroke symptoms: This may be an emergency. Please call 911 immediately. If non-emergent: Offer urgent same-day visit.",
-    "actions": ["Emergency escalation or urgent scheduling"],
+    "actions": [
+      "Emergency escalation or urgent scheduling"
+    ],
     "hard_stop": "If chest pain, shortness of breath, stroke symptoms: This may be an emergency. Please call 911 immediately.",
     "metadata": {
       "intent": "urgent_symptoms_triage",
@@ -337,9 +557,21 @@
     "scenario_id": "RX-ROUTINE-001",
     "intent": "routine_refill",
     "risk": "low",
-    "triggers": ["Chronic medication", "same dose", "same pharmacy", "seen within 12 months", "labs not critically overdue", "routine refill"],
+    "triggers": [
+      "Chronic medication",
+      "same dose",
+      "same pharmacy",
+      "seen within 12 months",
+      "labs not critically overdue",
+      "routine refill"
+    ],
     "script": "Your refill has been sent to your pharmacy. Please let us know if you notice any side effects.",
-    "actions": ["Send refill (standard quantity)", "Notify via SMS/email", "Log audit trail", "Passive physician notification"],
+    "actions": [
+      "Send refill (standard quantity)",
+      "Notify via SMS/email",
+      "Log audit trail",
+      "Passive physician notification"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "routine_refill",
@@ -352,9 +584,19 @@
     "scenario_id": "RX-LABS-002",
     "intent": "refill_overdue_labs",
     "risk": "moderate",
-    "triggers": ["Labs required for medication monitoring", "labs overdue but not critical", "refill overdue labs", "labs due"],
+    "triggers": [
+      "Labs required for medication monitoring",
+      "labs overdue but not critical",
+      "refill overdue labs",
+      "labs due"
+    ],
     "script": "I've sent a short refill to keep you covered. Please complete your lab work as soon as possible to continue safely.",
-    "actions": ["Send 30–90 day refill", "Place lab order", "Send lab reminder", "Log as short refill due to labs"],
+    "actions": [
+      "Send 30–90 day refill",
+      "Place lab order",
+      "Send lab reminder",
+      "Log as short refill due to labs"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "refill_overdue_labs",
@@ -367,9 +609,19 @@
     "scenario_id": "RX-VISIT-003",
     "intent": "refill_overdue_visit",
     "risk": "moderate",
-    "triggers": ["Last visit >12 months", "stable chronic medication", "refill overdue visit", "visit overdue"],
+    "triggers": [
+      "Last visit >12 months",
+      "stable chronic medication",
+      "refill overdue visit",
+      "visit overdue"
+    ],
     "script": "I've sent a short refill and scheduled a reminder for your follow-up visit to keep everything on track.",
-    "actions": ["Send limited refill", "Offer scheduling", "Flag visit overdue", "Log decision"],
+    "actions": [
+      "Send limited refill",
+      "Offer scheduling",
+      "Flag visit overdue",
+      "Log decision"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "refill_overdue_visit",
@@ -382,9 +634,21 @@
     "scenario_id": "RX-CONTROL-004",
     "intent": "controlled_substance_refill",
     "risk": "high",
-    "triggers": ["Controlled medication", "opioid", "benzodiazepine", "stimulant", "sleep med", "controlled substance refill"],
+    "triggers": [
+      "Controlled medication",
+      "opioid",
+      "benzodiazepine",
+      "stimulant",
+      "sleep med",
+      "controlled substance refill"
+    ],
     "script": "Controlled medications require direct physician review. I've routed your request for prompt attention. No timeline guarantees.",
-    "actions": ["Create high-priority refill task", "Notify physician", "Do NOT auto-approve", "Log request"],
+    "actions": [
+      "Create high-priority refill task",
+      "Notify physician",
+      "Do NOT auto-approve",
+      "Log request"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "controlled_substance_refill",
@@ -397,9 +661,18 @@
     "scenario_id": "RX-CONTROL-001",
     "intent": "controlled_refill_request",
     "risk": "high",
-    "triggers": ["I need my Xanax early", "Can you refill my pain medication", "controlled refill", "early refill request"],
+    "triggers": [
+      "I need my Xanax early",
+      "Can you refill my pain medication",
+      "controlled refill",
+      "early refill request"
+    ],
     "script": "For controlled medications, the doctor must review each request individually. I'll route this for review right away. No promise. No timing guarantees.",
-    "actions": ["Create High-Priority Refill Task", "Tag as Controlled", "Notify physician queue"],
+    "actions": [
+      "Create High-Priority Refill Task",
+      "Tag as Controlled",
+      "Notify physician queue"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "controlled_refill_request",
@@ -412,9 +685,23 @@
     "scenario_id": "RX-BRIDGE-005",
     "intent": "short_bridge_refill",
     "risk": "moderate",
-    "triggers": ["Patient out of medication", "follow-up pending", "condition high-risk", "HTN", "CAD", "DM", "thyroid", "bridge refill"],
+    "triggers": [
+      "Patient out of medication",
+      "follow-up pending",
+      "condition high-risk",
+      "HTN",
+      "CAD",
+      "DM",
+      "thyroid",
+      "bridge refill"
+    ],
     "script": "I've sent a short refill to prevent interruption. Let's schedule your follow-up to review your care plan.",
-    "actions": ["Send 30-day refill", "Auto-schedule reminder", "Flag continuity safeguard", "Log bridge refill"],
+    "actions": [
+      "Send 30-day refill",
+      "Auto-schedule reminder",
+      "Flag continuity safeguard",
+      "Log bridge refill"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "short_bridge_refill",
@@ -427,9 +714,19 @@
     "scenario_id": "RX-DENY-006",
     "intent": "denied_refill",
     "risk": "variable",
-    "triggers": ["Medication inappropriate", "labs critically overdue", "visit severely overdue", "controlled early refill", "denied refill"],
+    "triggers": [
+      "Medication inappropriate",
+      "labs critically overdue",
+      "visit severely overdue",
+      "controlled early refill",
+      "denied refill"
+    ],
     "script": "This refill requires physician review to ensure safety. We'll follow up with next steps. If inappropriate: This medication cannot be refilled without an updated evaluation.",
-    "actions": ["Escalate to physician", "Offer visit scheduling", "Log denial reason"],
+    "actions": [
+      "Escalate to physician",
+      "Offer visit scheduling",
+      "Log denial reason"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "denied_refill",
@@ -442,9 +739,18 @@
     "scenario_id": "RX-PHARM-008",
     "intent": "pharmacy_change_request",
     "risk": "low",
-    "triggers": ["I changed pharmacies", "Pharmacy closure", "new pharmacy", "pharmacy change"],
+    "triggers": [
+      "I changed pharmacies",
+      "Pharmacy closure",
+      "new pharmacy",
+      "pharmacy change"
+    ],
     "script": "Thank you for the update. I'll send your prescription to the new pharmacy.",
-    "actions": ["Update pharmacy in EMR", "Resend prescription", "Log change"],
+    "actions": [
+      "Update pharmacy in EMR",
+      "Resend prescription",
+      "Log change"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "pharmacy_change_request",
@@ -452,15 +758,27 @@
       "department": "pharmacy",
       "brain": "physician_assistant"
     },
-    "required_data": ["New pharmacy name", "Address or store number", "Phone number"]
+    "required_data": [
+      "New pharmacy name",
+      "Address or store number",
+      "Phone number"
+    ]
   },
   {
     "scenario_id": "MA-RX-002",
     "intent": "medication_side_effect_report",
     "risk": "moderate",
-    "triggers": ["Patient reports medication side effects", "side effects", "medication side effect", "reaction to medication"],
+    "triggers": [
+      "Patient reports medication side effects",
+      "side effects",
+      "medication side effect",
+      "reaction to medication"
+    ],
     "script": "I'm sorry you're experiencing that. When did this start? Are you having trouble breathing, severe swelling, chest pain, or fainting? If severe → emergency escalation. If mild: I'll notify the doctor so we can advise you safely.",
-    "actions": ["Create urgent clinical task", "Flag medication in chart"],
+    "actions": [
+      "Create urgent clinical task",
+      "Flag medication in chart"
+    ],
     "hard_stop": "If trouble breathing, severe swelling, chest pain, fainting: Please call 911 or go to the nearest emergency room.",
     "metadata": {
       "intent": "medication_side_effect_report",
@@ -473,9 +791,16 @@
     "scenario_id": "REC-CALL-001",
     "intent": "general_medical_question",
     "risk": "variable",
-    "triggers": ["I have a question about my condition", "Can I ask the doctor something", "general medical question", "question for the doctor"],
+    "triggers": [
+      "I have a question about my condition",
+      "Can I ask the doctor something",
+      "general medical question",
+      "question for the doctor"
+    ],
     "script": "I'm happy to help route your question. May I confirm your full name and date of birth? Can you briefly describe your question? If purely administrative → route to correct department. If clinical: I'll send this to the clinical team for review.",
-    "actions": ["Create clinical message task"],
+    "actions": [
+      "Create clinical message task"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "general_medical_question",
@@ -488,9 +813,17 @@
     "scenario_id": "REC-CALL-003",
     "intent": "lab_result_inquiry",
     "risk": "low",
-    "triggers": ["Patient asks about lab results", "lab results", "lab result inquiry", "my results ready"],
+    "triggers": [
+      "Patient asks about lab results",
+      "lab results",
+      "lab result inquiry",
+      "my results ready"
+    ],
     "script": "I'll check whether your results have been reviewed. If reviewed & non-critical: The doctor has reviewed them. I can schedule a visit to discuss. If pending: Your results are still pending review.",
-    "actions": ["Check result status", "Schedule if needed"],
+    "actions": [
+      "Check result status",
+      "Schedule if needed"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "lab_result_inquiry",
@@ -503,9 +836,16 @@
     "scenario_id": "REC-CALL-006",
     "intent": "after_hours_call",
     "risk": "variable",
-    "triggers": ["Call outside office hours", "after hours", "office closed", "after-hours call"],
+    "triggers": [
+      "Call outside office hours",
+      "after hours",
+      "office closed",
+      "after-hours call"
+    ],
     "script": "Our office is currently closed. If this is a medical emergency, call 911. If non-emergent: I'll forward this to the on-call provider.",
-    "actions": ["Create after-hours task"],
+    "actions": [
+      "Create after-hours task"
+    ],
     "hard_stop": "If medical emergency: call 911.",
     "metadata": {
       "intent": "after_hours_call",
@@ -518,9 +858,17 @@
     "scenario_id": "REC-CALL-009",
     "intent": "prescription_refill_request_phone",
     "risk": "low",
-    "triggers": ["Patient calls requesting prescription refill", "prescription refill", "refill request phone", "need refill"],
+    "triggers": [
+      "Patient calls requesting prescription refill",
+      "prescription refill",
+      "refill request phone",
+      "need refill"
+    ],
     "script": "Which medication and which pharmacy? Run refill safety logic.",
-    "actions": ["Run refill safety logic", "Process or route refill"],
+    "actions": [
+      "Run refill safety logic",
+      "Process or route refill"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "prescription_refill_request_phone",
@@ -533,9 +881,19 @@
     "scenario_id": "PA-001",
     "intent": "prior_authorization_required",
     "risk": "moderate",
-    "triggers": ["Pharmacy rejection", "CoverMyMeds alert", "prior authorization", "insurance authorization required"],
+    "triggers": [
+      "Pharmacy rejection",
+      "CoverMyMeds alert",
+      "prior authorization",
+      "insurance authorization required"
+    ],
     "script": "Your medication requires insurance authorization. We are working on this and will keep you updated.",
-    "actions": ["Pull chart data (ICD-10, prior meds, labs)", "Pre-fill CoverMyMeds", "Create PA task", "Status: Submitted"],
+    "actions": [
+      "Pull chart data (ICD-10, prior meds, labs)",
+      "Pre-fill CoverMyMeds",
+      "Create PA task",
+      "Status: Submitted"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "prior_authorization_required",
@@ -548,9 +906,17 @@
     "scenario_id": "REC-ELIG-001",
     "intent": "eligibility_verification",
     "risk": "low",
-    "triggers": ["Insurance eligibility verification", "eligibility", "verify insurance", "benefits verification"],
+    "triggers": [
+      "Insurance eligibility verification",
+      "eligibility",
+      "verify insurance",
+      "benefits verification"
+    ],
     "script": "To verify your benefits, I'll need the insurance member ID and group number. May I send a secure link for you to upload a photo of your insurance card?",
-    "actions": ["Create eligibility task", "Notify staff queue"],
+    "actions": [
+      "Create eligibility task",
+      "Notify staff queue"
+    ],
     "hard_stop": null,
     "metadata": {
       "intent": "eligibility_verification",
@@ -558,6 +924,2730 @@
       "department": "reception",
       "brain": "receptionist"
     },
-    "required_data": ["Insurance carrier", "Member ID", "Group number", "Subscriber DOB"]
+    "required_data": [
+      "Insurance carrier",
+      "Member ID",
+      "Group number",
+      "Subscriber DOB"
+    ]
+  },
+  {
+    "scenario_id": "ADMIN-COMPLAINT-003",
+    "intent": "admin_complaint_003",
+    "risk": "moderate",
+    "triggers": [
+      "long wait time",
+      "staff behavior",
+      "scheduling difficulty",
+      "date of visit",
+      "nature of complaint",
+      "desired resolution",
+      "Document complaint",
+      "Notify office manager",
+      "Initiate service recovery process"
+    ],
+    "script": "“I’m sorry that your experience did not meet expectations.” “We truly value your feedback and want to address this appropriately.”",
+    "actions": [
+      "Document complaint",
+      "Notify office manager",
+      "Initiate service recovery process"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_complaint_003",
+      "risk_level": "moderate",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-CONFLICT-002",
+    "intent": "admin_conflict_002",
+    "risk": "moderate",
+    "triggers": [
+      "scheduling disagreement",
+      "billing responsibility dispute",
+      "front/back office coordination issue",
+      "Document issue",
+      "Escalate to office manager if unresolved",
+      "Log resolution attempt"
+    ],
+    "script": "“Let’s review the situation so we can resolve it constructively.” “Our goal is to ensure the best patient care and team collaboration.”",
+    "actions": [
+      "Document issue",
+      "Escalate to office manager if unresolved",
+      "Log resolution attempt"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_conflict_002",
+      "risk_level": "moderate",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-DISSAT-004",
+    "intent": "admin_dissat_004",
+    "risk": "low",
+    "triggers": [
+      "unhappy with care",
+      "confusion about treatment",
+      "negative experience",
+      "offer follow-up visit",
+      "clarify misunderstanding",
+      "escalate to physician if clinical",
+      "document concern",
+      "route to appropriate department"
+    ],
+    "script": "“I understand your concern, and we want to make sure your experience improves.” “Let’s see how we can help address this.”",
+    "actions": [
+      "document concern",
+      "route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_dissat_004",
+      "risk_level": "low",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-MEMBER-007",
+    "intent": "admin_member_007",
+    "risk": "low",
+    "triggers": [
+      "wellness membership",
+      "concierge medicine",
+      "MedSpa subscription",
+      "monthly cost",
+      "included services",
+      "appointment priority if applicable",
+      "provide membership brochure",
+      "offer enrollment instructions",
+      "log interest"
+    ],
+    "script": "“Our membership plans are designed to provide enhanced services and benefits.” Explain: - monthly cost - included services - appointment priority if applicable",
+    "actions": [
+      "provide membership brochure",
+      "offer enrollment instructions",
+      "log interest"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_member_007",
+      "risk_level": "low",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-POLICY-005",
+    "intent": "admin_policy_005",
+    "risk": "low",
+    "triggers": [
+      "cancellation policy",
+      "no-show fees",
+      "refill policy",
+      "late arrival policy",
+      "reference official practice policy",
+      "send policy document if needed",
+      "log explanation"
+    ],
+    "script": "“Our practice policies are designed to ensure fair scheduling and patient care.” Then explain policy clearly. Example: “If an appointment is missed without notice, a fee may apply because that time was reserved for your care.”",
+    "actions": [
+      "reference official practice policy",
+      "send policy document if needed",
+      "log explanation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_policy_005",
+      "risk_level": "low",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-PRICE-006",
+    "intent": "admin_price_006",
+    "risk": "low",
+    "triggers": [
+      "“How much does this visit cost?”",
+      "“What is the price of this service?”",
+      "visit cost range",
+      "insurance variability",
+      "possible additional services",
+      "retrieve service fee schedule",
+      "provide estimate",
+      "document conversation"
+    ],
+    "script": "“I can provide an estimate based on the service type.” Explain: - visit cost range - insurance variability - possible additional services Important Rule Never guarantee final cost.",
+    "actions": [
+      "retrieve service fee schedule",
+      "provide estimate",
+      "document conversation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_price_006",
+      "risk_level": "low",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-STAFF-001",
+    "intent": "escalate_operational_issue_to_leadership",
+    "risk": "moderate",
+    "triggers": [
+      "workflow breakdown",
+      "unresolved patient issue",
+      "scheduling conflict",
+      "billing problem requiring supervisor",
+      "Identify responsible department",
+      "Create escalation task",
+      "Notify office manager or physician",
+      "Log escalation event"
+    ],
+    "script": "“Thank you for bringing this to attention. I will escalate this to the appropriate supervisor so it can be reviewed promptly.”",
+    "actions": [
+      "Identify responsible department",
+      "Create escalation task",
+      "Notify office manager or physician",
+      "Log escalation event"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "escalate_operational_issue_to_leadership",
+      "risk_level": "moderate",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "ADMIN-VIP-008",
+    "intent": "admin_vip_008",
+    "risk": "moderate",
+    "triggers": [
+      "high-profile patient",
+      "concierge membership patient",
+      "executive care",
+      "faster scheduling",
+      "direct physician communication if needed",
+      "concierge workflow",
+      "flag VIP status",
+      "route request to priority queue",
+      "notify physician if needed"
+    ],
+    "script": "“Thank you for reaching out. We will make every effort to assist you promptly.” Priority Handling - faster scheduling - direct physician communication if needed - concierge workflow",
+    "actions": [
+      "flag VIP status",
+      "route request to priority queue",
+      "notify physician if needed"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "admin_vip_008",
+      "risk_level": "moderate",
+      "department": "admin",
+      "brain": "office_manager"
+    }
+  },
+  {
+    "scenario_id": "BACK-DOC-005",
+    "intent": "back_doc_005",
+    "risk": "low",
+    "triggers": [
+      "unsigned note",
+      "missing lab order justification",
+      "incomplete referral form",
+      "notify responsible staff",
+      "link incomplete document",
+      "log reminder"
+    ],
+    "script": "“A required document appears incomplete. Please review and complete the documentation.”",
+    "actions": [
+      "notify responsible staff",
+      "link incomplete document",
+      "log reminder"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_doc_005",
+      "risk_level": "low",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-LAB-002",
+    "intent": "back_lab_002",
+    "risk": "moderate",
+    "triggers": [
+      "abnormal lab value",
+      "repeat lab needed",
+      "physician requested follow-up",
+      "generate follow-up task",
+      "assign to medical assistant",
+      "attach lab result reference",
+      "track completion"
+    ],
+    "script": "“Please contact the patient to schedule follow-up labs or appointment as instructed.”",
+    "actions": [
+      "generate follow-up task",
+      "assign to medical assistant",
+      "attach lab result reference",
+      "track completion"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_lab_002",
+      "risk_level": "moderate",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-NURSE-007",
+    "intent": "back_nurse_007",
+    "risk": "moderate",
+    "triggers": [
+      "medication side effects",
+      "wound care question",
+      "symptom assessment",
+      "assign to nurse queue",
+      "attach patient message",
+      "mark priority level"
+    ],
+    "script": "“I’m routing this message to the nursing team for clinical review.”",
+    "actions": [
+      "assign to nurse queue",
+      "attach patient message",
+      "mark priority level"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_nurse_007",
+      "risk_level": "moderate",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-PA-004",
+    "intent": "back_pa_004",
+    "risk": "moderate",
+    "triggers": [
+      "CPT code",
+      "diagnosis code",
+      "clinical notes",
+      "supporting documentation",
+      "route task to authorization specialist",
+      "attach necessary documentation",
+      "track authorization status"
+    ],
+    "script": "“This request requires insurance authorization before proceeding.”",
+    "actions": [
+      "route task to authorization specialist",
+      "attach necessary documentation",
+      "track authorization status"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_pa_004",
+      "risk_level": "moderate",
+      "department": "prior_auth",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-PHYS-008",
+    "intent": "back_phys_008",
+    "risk": "high",
+    "triggers": [
+      "medication change request",
+      "abnormal result interpretation",
+      "patient complaint involving care plan",
+      "notify physician dashboard",
+      "attach related documentation",
+      "track physician response"
+    ],
+    "script": "“This matter requires physician review. I will forward it to the doctor.”",
+    "actions": [
+      "notify physician dashboard",
+      "attach related documentation",
+      "track physician response"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_phys_008",
+      "risk_level": "high",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-REF-003",
+    "intent": "back_ref_003",
+    "risk": "low",
+    "triggers": [
+      "referral specialty",
+      "insurance requirements",
+      "preferred specialist",
+      "verify insurance rules",
+      "prepare referral documentation",
+      "send referral to specialist office",
+      "notify patient"
+    ],
+    "script": "“Please coordinate the referral and notify the patient once scheduled.”",
+    "actions": [
+      "verify insurance rules",
+      "prepare referral documentation",
+      "send referral to specialist office",
+      "notify patient"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_ref_003",
+      "risk_level": "low",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-SCHED-006",
+    "intent": "back_sched_006",
+    "risk": "low",
+    "triggers": [
+      "multiple appointments",
+      "procedure + follow-up",
+      "coordination with outside provider",
+      "assign task to scheduling team",
+      "confirm availability",
+      "notify patient once scheduled"
+    ],
+    "script": "“Please coordinate scheduling to ensure the patient receives all required services.”",
+    "actions": [
+      "assign task to scheduling team",
+      "confirm availability",
+      "notify patient once scheduled"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "back_sched_006",
+      "risk_level": "low",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BACK-TASK-001",
+    "intent": "assign_operational_task",
+    "risk": "low",
+    "triggers": [
+      "physician instruction",
+      "patient request",
+      "lab result workflow",
+      "referral process",
+      "patient name",
+      "task description",
+      "priority level",
+      "responsible staff role",
+      "due date",
+      "create task ticket",
+      "assign to correct department",
+      "track completion status",
+      "notify responsible staff"
+    ],
+    "script": "“I’m assigning this task so it can be completed promptly.” Task Information Task must include: - patient name - task description - priority level - responsible staff role - due date",
+    "actions": [
+      "create task ticket",
+      "assign to correct department",
+      "track completion status",
+      "notify responsible staff"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "assign_operational_task",
+      "risk_level": "low",
+      "department": "back_office",
+      "brain": "workflow_coordinator"
+    }
+  },
+  {
+    "scenario_id": "BILL-COPAY-001",
+    "intent": "explain_copay_responsibility",
+    "risk": "low",
+    "triggers": [
+      "“Why do I have to pay a copay?”",
+      "“I thought my insurance covered this visit.”",
+      "Patient name",
+      "DOB",
+      "Insurance plan",
+      "Primary care visit copay",
+      "Specialist copay",
+      "Telemedicine copay",
+      "Verify insurance plan benefits",
+      "Confirm copay amount",
+      "Log explanation provided"
+    ],
+    "script": "(Simple Language) “A copay is the portion of the visit cost that your insurance requires you to pay at the time of service.” “The amount is determined by your insurance plan.” If Copay Type Clarification Needed Explain categories: - Primary care visit copay - Specialist copay - Telemedicine copay",
+    "actions": [
+      "Verify insurance plan benefits",
+      "Confirm copay amount",
+      "Log explanation provided"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "explain_copay_responsibility",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "BILL-CPT-003",
+    "intent": "bill_cpt_003",
+    "risk": "low",
+    "triggers": [
+      "“What is this CPT code?”",
+      "“Why am I charged for this service?”",
+      "Identify CPT code",
+      "Provide simple explanation",
+      "Log clarification"
+    ],
+    "script": "“CPT codes are standardized codes used to describe medical services provided during your visit.” Example: 99214 “This code represents an established patient visit that required moderate medical decision-making.” Important Rule Do not explain medical diagnosis unless already documented and visible to patient.",
+    "actions": [
+      "Identify CPT code",
+      "Provide simple explanation",
+      "Log clarification"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "bill_cpt_003",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "BILL-DENIAL-004",
+    "intent": "bill_denial_004",
+    "risk": "moderate",
+    "triggers": [
+      "“Why did insurance deny this claim?”",
+      "Service not covered",
+      "Prior authorization required",
+      "Deductible not met",
+      "Coding issue",
+      "Retrieve denial reason",
+      "Explain denial code",
+      "Route to billing specialist if appeal possible"
+    ],
+    "script": "“Your insurance reviewed the claim and determined it was not covered under your current plan.” Possible reasons: - Service not covered - Prior authorization required - Deductible not met - Coding issue",
+    "actions": [
+      "Retrieve denial reason",
+      "Explain denial code",
+      "Route to billing specialist if appeal possible"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "bill_denial_004",
+      "risk_level": "moderate",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "BILL-NS-001",
+    "intent": "bill_ns_001",
+    "risk": "low",
+    "triggers": [
+      "Missed appointment",
+      "Apply fee (if policy)",
+      "Offer reschedule",
+      "Log contact"
+    ],
+    "script": "“We noticed you missed your appointment today. Would you like to reschedule?” If policy applies: “A no-show fee may apply per office policy.” Action - Apply fee (if policy) - Offer reschedule - Log contact",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "bill_ns_001",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "biller"
+    }
+  },
+  {
+    "scenario_id": "BILL-PPLAN-005",
+    "intent": "bill_pplan_005",
+    "risk": "low",
+    "triggers": [
+      "“I can’t pay the full amount right now.”",
+      "Monthly payment arrangement",
+      "Partial payment today",
+      "Scheduled billing",
+      "Review outstanding balance",
+      "Offer plan options",
+      "Document payment agreement"
+    ],
+    "script": "“We understand medical expenses can be difficult. We may be able to set up a payment plan.” Plan Options (Example) - Monthly payment arrangement - Partial payment today - Scheduled billing Compliance Rule Payment plans must follow practice policy. Doctor Twin cannot approve special financial arrangements beyond policy.",
+    "actions": [
+      "Review outstanding balance",
+      "Offer plan options",
+      "Document payment agreement"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "bill_pplan_005",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "BILL-REFUND-006",
+    "intent": "bill_refund_006",
+    "risk": "moderate",
+    "triggers": [
+      "“Why did I receive a refund?”",
+      "“Am I owed money back?”",
+      "Insurance adjustments",
+      "Duplicate payment",
+      "Billing correction",
+      "Verify refund reason",
+      "Confirm refund method",
+      "Log refund explanation"
+    ],
+    "script": "“A refund may occur if your insurance paid more than expected or if an overpayment was made.” Investigation Steps Check: - Insurance adjustments - Duplicate payment - Billing correction",
+    "actions": [
+      "Verify refund reason",
+      "Confirm refund method",
+      "Log refund explanation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "bill_refund_006",
+      "risk_level": "moderate",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "BILL-STMT-002",
+    "intent": "explain_patient_statement",
+    "risk": "low",
+    "triggers": [
+      "“I received a bill and don’t understand it.”",
+      "Pull billing statement",
+      "Explain charges line-by-line if needed",
+      "Document explanation"
+    ],
+    "script": "“I’m happy to review the statement with you.” “This statement shows the services provided, what your insurance paid, and the remaining balance.”",
+    "actions": [
+      "Pull billing statement",
+      "Explain charges line-by-line if needed",
+      "Document explanation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "explain_patient_statement",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "BILL-TECH-007",
+    "intent": "bill_tech_007",
+    "risk": "low",
+    "triggers": [
+      "Portal payment not working",
+      "Unable to view statement",
+      "Payment failed",
+      "Reset portal session if needed",
+      "Escalate to technical support",
+      "Log issue"
+    ],
+    "script": "“I’m sorry you’re experiencing a portal issue. Let’s try to resolve it.” Troubleshooting Steps 1️⃣ Confirm patient login status 2️⃣ Check portal service status 3️⃣ Offer alternate payment options",
+    "actions": [
+      "Reset portal session if needed",
+      "Escalate to technical support",
+      "Log issue"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "bill_tech_007",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-AVS-009",
+    "intent": "after_visit_summary_drafting",
+    "risk": "low",
+    "triggers": [
+      "Visit completed",
+      "after-visit summary",
+      "visit summary",
+      "AVS"
+    ],
+    "script": "Generate patient-friendly summary: diagnosis, medications, next steps, follow-up. Attach to portal/app. Allow physician edit before sending.",
+    "actions": [
+      "Generate patient-friendly summary",
+      "Attach to portal/app",
+      "Allow physician edit before sending"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "after_visit_summary_drafting",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-CODE-003",
+    "intent": "coding_suggestion_cpt_icd",
+    "risk": "low",
+    "triggers": [
+      "Encounter nearing completion",
+      "CPT suggestion",
+      "ICD codes",
+      "coding support"
+    ],
+    "script": "Based on documentation: suggest visit level (e.g. 99214) and diagnosis codes. Doctor Twin suggests only; physician confirms final codes.",
+    "actions": [
+      "Analyze documentation",
+      "Suggest CPT + ICD codes",
+      "Flag documentation gaps"
+    ],
+    "hard_stop": "Doctor Twin suggests only. Physician confirms final codes.",
+    "metadata": {
+      "intent": "coding_suggestion_cpt_icd",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "billing_intelligence"
+    }
+  },
+  {
+    "scenario_id": "CLIN-EDU-007",
+    "intent": "patient_education_scripting",
+    "risk": "low",
+    "triggers": [
+      "Doctor discussing diagnosis or treatment",
+      "patient education",
+      "explain condition to patient"
+    ],
+    "script": "Display patient-friendly explanation matching physician plan and verified medical sources. Example: High blood pressure increases the risk of heart disease and stroke. Managing it with medication, diet, and exercise can significantly reduce those risks.",
+    "actions": [
+      "Display patient-friendly explanation",
+      "Offer printable education materials"
+    ],
+    "hard_stop": "Education must match physician plan and verified medical sources.",
+    "metadata": {
+      "intent": "patient_education_scripting",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-FOLLOW-006",
+    "intent": "followup_plan_suggestion",
+    "risk": "low",
+    "triggers": [
+      "Visit nearing completion",
+      "follow-up timeframe",
+      "next visit",
+      "follow-up plan"
+    ],
+    "script": "A follow-up visit in three months is typically recommended. Suggest timeline and offer scheduling.",
+    "actions": [
+      "Suggest timeline",
+      "Offer scheduling",
+      "Add reminders"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "followup_plan_suggestion",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-MEDREC-005",
+    "intent": "medication_reconciliation_visit",
+    "risk": "low",
+    "triggers": [
+      "Visit begins or medications discussed",
+      "medication reconciliation",
+      "confirm current medications"
+    ],
+    "script": "Let's confirm your current medications. Compare chart list, patient-reported, and pharmacy fill history. Highlight discrepancies.",
+    "actions": [
+      "Highlight discrepancies",
+      "Suggest updates",
+      "Log reconciliation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "medication_reconciliation_visit",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-ORDER-004",
+    "intent": "order_suggestion",
+    "risk": "moderate",
+    "triggers": [
+      "Diagnosis or symptoms discussed during visit",
+      "suggest labs",
+      "order suggestion",
+      "evidence-based orders"
+    ],
+    "script": "Based on this condition, these labs are typically monitored. Orders appear as suggestions, not auto-submitted.",
+    "actions": [
+      "Retrieve evidence-based protocols",
+      "Suggest labs or imaging",
+      "Await physician approval"
+    ],
+    "hard_stop": "Orders appear as suggestions, not auto-submitted.",
+    "metadata": {
+      "intent": "order_suggestion",
+      "risk_level": "moderate",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-PREVISIT-001",
+    "intent": "physician_briefing_pre_visit",
+    "risk": "low",
+    "triggers": [
+      "Doctor opens patient chart",
+      "enters exam room",
+      "pre-visit summary",
+      "patient snapshot",
+      "physician briefing"
+    ],
+    "script": "Generate summary panel: patient demographics, problem list, last visit summary, current medications, recent labs/imaging, outstanding tasks. Highlight abnormal labs and flag overdue screenings.",
+    "actions": [
+      "Generate summary panel",
+      "Highlight abnormal labs",
+      "Flag overdue screenings"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "physician_briefing_pre_visit",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-SOAP-002",
+    "intent": "soap_drafting_support",
+    "risk": "low",
+    "triggers": [
+      "Doctor dictates or enters encounter notes",
+      "SOAP note",
+      "structured note during visit"
+    ],
+    "script": "Auto-populate SOAP template (Subjective, Objective, Assessment, Plan). Insert structured vitals and labs. Await physician confirmation.",
+    "actions": [
+      "Auto-populate SOAP template",
+      "Insert structured vitals and labs",
+      "Await physician confirmation"
+    ],
+    "hard_stop": "Doctor Twin never finalizes the note. Physician must review and approve.",
+    "metadata": {
+      "intent": "soap_drafting_support",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "documentation_assistant"
+    }
+  },
+  {
+    "scenario_id": "CLIN-STAFF-008",
+    "intent": "in_room_staff_instruction",
+    "risk": "low",
+    "triggers": [
+      "Doctor requests staff assistance",
+      "schedule this patient for labs",
+      "Arrange cardiology referral",
+      "staff instruction"
+    ],
+    "script": "Front desk: schedule follow-up in 3 months. Send task to staff dashboard and track completion.",
+    "actions": [
+      "Send task to staff dashboard",
+      "Track completion"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "in_room_staff_instruction",
+      "risk_level": "low",
+      "department": "clinical",
+      "brain": "clinical_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-FMLA-005",
+    "intent": "doc_fmla_005",
+    "risk": "moderate",
+    "triggers": [
+      "Disability documentation",
+      "FMLA paperwork",
+      "Work limitation forms",
+      "Employer form",
+      "Patient signature section completed",
+      "Supporting medical information",
+      "Upload form to chart",
+      "Assign to physician task queue",
+      "Track completion timeline",
+      "Notify patient when ready"
+    ],
+    "script": "“These forms typically require physician review. Please upload the paperwork through the secure portal.”",
+    "actions": [
+      "Upload form to chart",
+      "Assign to physician task queue",
+      "Track completion timeline",
+      "Notify patient when ready"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "doc_fmla_005",
+      "risk_level": "moderate",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-IMMUN-006",
+    "intent": "doc_immun_006",
+    "risk": "low",
+    "triggers": [
+      "School requirement",
+      "Travel requirement",
+      "Employment verification",
+      "Retrieve vaccine history",
+      "Generate standardized immunization report",
+      "Send secure file"
+    ],
+    "script": "“I can provide a copy of your immunization record.” “You’ll receive a downloadable document through the patient portal.”",
+    "actions": [
+      "Retrieve vaccine history",
+      "Generate standardized immunization report",
+      "Send secure file"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "doc_immun_006",
+      "risk_level": "low",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-NOTE-004",
+    "intent": "doc_note_004",
+    "risk": "low",
+    "triggers": [
+      "“I need a work excuse.”",
+      "“My child needs a school note.”",
+      "Visit date",
+      "Return-to-work/school recommendation",
+      "Generate note template",
+      "Physician review if required",
+      "Deliver via portal"
+    ],
+    "script": "“I can prepare a medical note confirming your visit.”",
+    "actions": [
+      "Generate note template",
+      "Physician review if required",
+      "Deliver via portal"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "doc_note_004",
+      "risk_level": "low",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-PATREC-001",
+    "intent": "patient_requesting_their_own_medical_records",
+    "risk": "moderate",
+    "triggers": [
+      "“I need a copy of my medical records.”",
+      "“Can you send me my chart?”",
+      "“I want my lab results and notes.”",
+      "Full name",
+      "Date of birth",
+      "Address or phone number",
+      "Patient portal identity if digital request",
+      "Secure portal download",
+      "Encrypted email",
+      "Printed copy",
+      "Secure transfer to another provider",
+      "Verify patient identity",
+      "Generate records export",
+      "Send secure delivery",
+      "Log records release"
+    ],
+    "script": "“I can help you obtain a copy of your medical records.” “For security purposes, we’ll need to verify your identity and confirm how you would like to receive the records.”",
+    "actions": [
+      "Verify patient identity",
+      "Generate records export",
+      "Send secure delivery",
+      "Log records release"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "patient_requesting_their_own_medical_records",
+      "risk_level": "moderate",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-PROVREC-002",
+    "intent": "doc_provrec_002",
+    "risk": "high",
+    "triggers": [
+      "Hospital requests records",
+      "Specialist requests chart",
+      "Transfer of care",
+      "Requesting provider identity",
+      "Medical facility",
+      "Authorization on file",
+      "Verify provider credentials",
+      "Confirm patient authorization",
+      "Send records securely",
+      "Log transfer"
+    ],
+    "script": "“Thank you for your request. We will process the records once a valid authorization form is received.”",
+    "actions": [
+      "Verify provider credentials",
+      "Confirm patient authorization",
+      "Send records securely",
+      "Log transfer"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "doc_provrec_002",
+      "risk_level": "high",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-ROI-003",
+    "intent": "doc_roi_003",
+    "risk": "low",
+    "triggers": [
+      "New physician",
+      "Legal representative",
+      "Insurance company",
+      "Patient name",
+      "DOB",
+      "Recipient organization",
+      "Specific records requested",
+      "Patient signature",
+      "Date",
+      "Provide ROI form",
+      "Verify signature",
+      "Process release",
+      "Document disclosure"
+    ],
+    "script": "“To release your records, we need a signed authorization form specifying the recipient.”",
+    "actions": [
+      "Provide ROI form",
+      "Verify signature",
+      "Process release",
+      "Document disclosure"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "doc_roi_003",
+      "risk_level": "low",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "DOC-UPLOAD-007",
+    "intent": "doc_upload_007",
+    "risk": "moderate",
+    "triggers": [
+      "Outside lab results",
+      "Imaging reports",
+      "Insurance cards",
+      "Referral letters",
+      "Lab result",
+      "Imaging report",
+      "Insurance document",
+      "Other clinical records",
+      "Store document in patient chart",
+      "Tag document type",
+      "Notify physician if clinical relevance detected"
+    ],
+    "script": "“Your document has been received and added to your medical record.” “If physician review is required, we will notify you.” Processing Steps Classify uploaded document: - Lab result - Imaging report - Insurance document - Other clinical records",
+    "actions": [
+      "Store document in patient chart",
+      "Tag document type",
+      "Notify physician if clinical relevance detected"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "doc_upload_007",
+      "risk_level": "moderate",
+      "department": "records",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "HOSP-001",
+    "intent": "hosp_001",
+    "risk": "low",
+    "triggers": [
+      "hosp 001",
+      "hosp 001"
+    ],
+    "script": "“Thank you for the update. We’ll schedule a follow-up within the recommended timeframe.” Create discharge follow-up task.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "hosp_001",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "HOSP-002",
+    "intent": "hosp_002",
+    "risk": "low",
+    "triggers": [
+      "hosp 002",
+      "hosp 002"
+    ],
+    "script": "“I’ll confirm with the physician and return your call.” Immediate clinical task.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "hosp_002",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "HOSP-003",
+    "intent": "hosp_003",
+    "risk": "low",
+    "triggers": [
+      "hosp 003",
+      "hosp 003"
+    ],
+    "script": "“Thank you. I’ll update the referral status in our system.” Update referral tracker.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "hosp_003",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "HOSP-004",
+    "intent": "hosp_004",
+    "risk": "high",
+    "triggers": [
+      "hosp 004",
+      "hosp 004"
+    ],
+    "script": "“Thank you for notifying us. I’m alerting the physician immediately.” Immediate physician alert + patient contact.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "hosp_004",
+      "risk_level": "high",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "IMG-FOLLOW-005",
+    "intent": "imaging_followup_scheduling",
+    "risk": "moderate",
+    "triggers": [
+      "Imaging complete",
+      "Follow-up required after imaging",
+      "schedule follow-up for imaging results"
+    ],
+    "script": "Let's schedule a follow-up visit to review your imaging results.",
+    "actions": [
+      "Book appointment",
+      "Send confirmation",
+      "Attach imaging report to visit"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "imaging_followup_scheduling",
+      "risk_level": "moderate",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "IMG-MILD-002",
+    "intent": "abnormal_imaging_followup",
+    "risk": "moderate",
+    "triggers": [
+      "Imaging shows finding requiring follow-up but not urgent",
+      "abnormal imaging",
+      "imaging needs follow-up"
+    ],
+    "script": "The imaging showed findings that are not urgent but require follow-up. The doctor recommends scheduling a visit to discuss next steps.",
+    "actions": [
+      "Offer visit scheduling",
+      "Attach report to appointment",
+      "Log patient notified"
+    ],
+    "hard_stop": "Avoid detailed interpretation beyond documented summary.",
+    "metadata": {
+      "intent": "abnormal_imaging_followup",
+      "risk_level": "moderate",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "IMG-NORMAL-001",
+    "intent": "normal_imaging_notification",
+    "risk": "low",
+    "triggers": [
+      "Imaging report reviewed as normal",
+      "imaging normal",
+      "no concerning findings"
+    ],
+    "script": "Your imaging study was reviewed and shows no concerning findings. If you have persistent symptoms, we can schedule follow-up.",
+    "actions": [
+      "Notify patient",
+      "Log notification"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "normal_imaging_notification",
+      "risk_level": "low",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "IMG-REF-004",
+    "intent": "imaging_referral_recommendation",
+    "risk": "moderate",
+    "triggers": [
+      "Imaging suggests specialist evaluation",
+      "refer to specialist for imaging",
+      "specialist evaluation"
+    ],
+    "script": "The doctor recommends evaluation by a specialist. I can assist in coordinating your referral.",
+    "actions": [
+      "Determine insurance type (PPO vs HMO)",
+      "Generate referral (if PPO/Medicare)",
+      "Route to Office Manager (if HMO)",
+      "Log referral initiation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "imaging_referral_recommendation",
+      "risk_level": "moderate",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "IMG-URGENT-003",
+    "intent": "urgent_imaging_result",
+    "risk": "high",
+    "triggers": [
+      "Imaging flagged urgent",
+      "urgent imaging result",
+      "imaging requires urgent attention"
+    ],
+    "script": "This imaging result requires urgent attention. If you are experiencing worsening symptoms, please seek emergency care.",
+    "actions": [
+      "Immediate physician alert",
+      "Contact patient urgently",
+      "Log contact attempts"
+    ],
+    "hard_stop": "Physician confirmation required.",
+    "metadata": {
+      "intent": "urgent_imaging_result",
+      "risk_level": "high",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "INS-001",
+    "intent": "ins_001",
+    "risk": "low",
+    "triggers": [
+      "ins 001",
+      "ins 001"
+    ],
+    "script": "“May I confirm which patient and date of service?” Provide minimum necessary info.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ins_001",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "INS-002",
+    "intent": "ins_002",
+    "risk": "low",
+    "triggers": [
+      "ins 002",
+      "ins 002"
+    ],
+    "script": "“I’ll check the status and confirm whether additional documentation is needed.” Route to PA Brain.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ins_002",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "INS-003",
+    "intent": "ins_003",
+    "risk": "low",
+    "triggers": [
+      "ins 003",
+      "ins 003"
+    ],
+    "script": "“Thank you for explaining the denial. We will review and determine next steps.” Log denial.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ins_003",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "INS-004",
+    "intent": "ins_004",
+    "risk": "high",
+    "triggers": [
+      "ins 004",
+      "ins 004"
+    ],
+    "script": "“I’ll coordinate directly with the physician to schedule the peer-to-peer discussion.” Escalate to physician immediately.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ins_004",
+      "risk_level": "high",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "INS-005",
+    "intent": "ins_005",
+    "risk": "low",
+    "triggers": [
+      "ins 005",
+      "ins 005"
+    ],
+    "script": "“Please send the request via secure fax or portal.” Create documentation task.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ins_005",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "LAB-CRIT-003",
+    "intent": "critical_lab_escalation",
+    "risk": "high",
+    "triggers": [
+      "Lab flagged critical",
+      "critical lab result",
+      "urgent lab"
+    ],
+    "script": "This result requires immediate medical attention. If you are experiencing symptoms such as chest pain, shortness of breath, severe weakness, or confusion, please call 911 immediately.",
+    "actions": [
+      "Notify physician immediately",
+      "Attempt patient contact (3 attempts)",
+      "Send urgent message if unreachable",
+      "Log timestamps"
+    ],
+    "hard_stop": "Immediate physician awareness required.",
+    "metadata": {
+      "intent": "critical_lab_escalation",
+      "risk_level": "high",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "LAB-LIFE-005",
+    "intent": "lifestyle_counseling_followup",
+    "risk": "low",
+    "triggers": [
+      "Mild elevation cholesterol A1c liver enzymes",
+      "Physician recommends lifestyle change",
+      "lifestyle counseling",
+      "diet and exercise"
+    ],
+    "script": "The doctor recommends lifestyle adjustments such as diet and exercise. We can schedule a follow-up to reassess.",
+    "actions": [
+      "Send educational resources",
+      "Schedule follow-up lab",
+      "Log counseling notification"
+    ],
+    "hard_stop": "Keep guidance general unless specific instructions documented.",
+    "metadata": {
+      "intent": "lifestyle_counseling_followup",
+      "risk_level": "low",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "LAB-MILD-002",
+    "intent": "mild_abnormal_lab",
+    "risk": "moderate",
+    "triggers": [
+      "Lab slightly outside reference range",
+      "Physician marked non-critical",
+      "slightly abnormal lab",
+      "one value outside normal"
+    ],
+    "script": "One of your lab values is slightly outside the normal range. The doctor would like to review this with you. It is not urgent, but we recommend scheduling a follow-up visit.",
+    "actions": [
+      "Offer scheduling",
+      "Attach lab result to visit",
+      "Log discussion"
+    ],
+    "hard_stop": "Avoid giving detailed interpretation beyond physician instructions.",
+    "metadata": {
+      "intent": "mild_abnormal_lab",
+      "risk_level": "moderate",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "LAB-NORMAL-001",
+    "intent": "normal_lab_notification",
+    "risk": "low",
+    "triggers": [
+      "Lab marked normal",
+      "Physician review completed",
+      "normal lab results",
+      "labs within normal limits"
+    ],
+    "script": "Your recent lab results have been reviewed and are within normal limits. If you have any questions, we're happy to schedule a follow-up visit.",
+    "actions": [
+      "Notify patient",
+      "Log notification",
+      "No automatic visit required unless physician indicated"
+    ],
+    "hard_stop": "If patient reports new symptoms → route to triage.",
+    "metadata": {
+      "intent": "normal_lab_notification",
+      "risk_level": "low",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "LAB-REPEAT-004",
+    "intent": "repeat_lab_request",
+    "risk": "moderate",
+    "triggers": [
+      "Physician ordered repeat testing",
+      "repeat lab",
+      "confirm result with repeat"
+    ],
+    "script": "The doctor would like to repeat this lab to confirm the result. I can help schedule your lab appointment.",
+    "actions": [
+      "Place lab order",
+      "Coordinate lab scheduling",
+      "Send secure lab instructions"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "repeat_lab_request",
+      "risk_level": "moderate",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "LAB-SCHED-006",
+    "intent": "lab_scheduling",
+    "risk": "low",
+    "triggers": [
+      "Schedule lab appointment",
+      "book lab",
+      "lab draw",
+      "when can I get my labs"
+    ],
+    "script": "I can schedule your lab appointment now. Do you prefer morning or afternoon?",
+    "actions": [
+      "Book lab slot (if in-house)",
+      "Provide lab location details",
+      "Send instructions (fasting if required)"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "lab_scheduling",
+      "risk_level": "low",
+      "department": "lab_imaging",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "LANG-ARAB-002",
+    "intent": "lang_arab_002",
+    "risk": "moderate",
+    "triggers": [
+      "“هل تتكلم العربية؟”",
+      "“أريد تحديد موعد.”",
+      "“لدي سؤال طبي.”",
+      "activate Arabic interface",
+      "translate request",
+      "process workflow",
+      "log English documentation"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "activate Arabic interface",
+      "translate request",
+      "process workflow",
+      "log English documentation"
+    ],
+    "hard_stop": "Medical explanations must remain clear and simple to prevent translation ambiguity.",
+    "metadata": {
+      "intent": "lang_arab_002",
+      "risk_level": "moderate",
+      "department": "multilingual",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "LANG-CLARIFY-004",
+    "intent": "lang_clarify_004",
+    "risk": "moderate",
+    "triggers": [
+      "unclear symptom description",
+      "unclear medication name",
+      "unclear instructions",
+      "request clarification",
+      "retranslate patient message",
+      "log clarification request"
+    ],
+    "script": "“To make sure I understand correctly, could you please clarify what you mean?” Offer translated examples if needed.",
+    "actions": [
+      "request clarification",
+      "retranslate patient message",
+      "log clarification request"
+    ],
+    "hard_stop": "Doctor Twin must never guess medical meaning when translation is uncertain.",
+    "metadata": {
+      "intent": "lang_clarify_004",
+      "risk_level": "moderate",
+      "department": "multilingual",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "LANG-INTERPRET-005",
+    "intent": "lang_interpret_005",
+    "risk": "high",
+    "triggers": [
+      "diagnosis explanation",
+      "consent discussion",
+      "procedure explanation",
+      "emergency triage",
+      "phone interpreter service",
+      "video interpreter",
+      "in-person interpreter",
+      "request interpreter service",
+      "coordinate appointment with interpreter",
+      "document interpreter involvement"
+    ],
+    "script": "“To ensure accurate communication, we can arrange a professional medical interpreter.” Interpreter Options - phone interpreter service - video interpreter - in-person interpreter",
+    "actions": [
+      "request interpreter service",
+      "coordinate appointment with interpreter",
+      "document interpreter involvement"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "lang_interpret_005",
+      "risk_level": "high",
+      "department": "multilingual",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "LANG-SPAN-001",
+    "intent": "respond_to_spanish_speaking_patient",
+    "risk": "moderate",
+    "triggers": [
+      "“Habla español?”",
+      "“Necesito ayuda con mi cita.”",
+      "“Tengo una pregunta médica.”",
+      "switch language interface to Spanish",
+      "translate patient request",
+      "process workflow normally",
+      "store English translation in medical record"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "switch language interface to Spanish",
+      "translate patient request",
+      "process workflow normally",
+      "store English translation in medical record"
+    ],
+    "hard_stop": "For complex medical discussions, offer interpreter if needed.",
+    "metadata": {
+      "intent": "respond_to_spanish_speaking_patient",
+      "risk_level": "moderate",
+      "department": "multilingual",
+      "brain": "multilingual_communication_layer"
+    }
+  },
+  {
+    "scenario_id": "LANG-SWITCH-003",
+    "intent": "lang_switch_003",
+    "risk": "low",
+    "triggers": [
+      "conversation starts in English",
+      "patient switches to Spanish or Arabic",
+      "switch conversation language",
+      "maintain documentation in English",
+      "log language change"
+    ],
+    "script": "“I can continue in your preferred language.” Switch response accordingly. Workflow 1️⃣ detect language change 2️⃣ confirm patient preference 3️⃣ update system language context",
+    "actions": [
+      "switch conversation language",
+      "maintain documentation in English",
+      "log language change"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "lang_switch_003",
+      "risk_level": "low",
+      "department": "multilingual",
+      "brain": "records_assistant"
+    }
+  },
+  {
+    "scenario_id": "MA-IMG-001",
+    "intent": "ma_img_001",
+    "risk": "low",
+    "triggers": [
+      "ma img 001",
+      "ma img 001"
+    ],
+    "script": "“Your imaging results have been reviewed. The doctor would like to schedule a visit to discuss the findings.” If patient anxious: “The doctor will explain everything in detail and answer your questions.” Action - Offer appointment - Log patient notified",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ma_img_001",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "MA-INTAKE-001",
+    "intent": "visit_preparation",
+    "risk": "low",
+    "triggers": [
+      "ma intake 001",
+      "visit preparation"
+    ],
+    "script": "“To help the doctor prepare, what is the main reason for today’s visit?” “How long has this been going on?”",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": "If red flags appear → alert physician. Action Generate “Doctor Brief” summary.",
+    "metadata": {
+      "intent": "visit_preparation",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "MA-MEDREC-001",
+    "intent": "ma_medrec_001",
+    "risk": "low",
+    "triggers": [
+      "Annual visit",
+      "Hospital follow-up",
+      "Update med list",
+      "Flag discrepancies",
+      "Save reconciliation note"
+    ],
+    "script": "“Are you still taking Lisinopril 10 mg daily?” “Have there been any changes or side effects?” Action - Update med list - Flag discrepancies - Save reconciliation note",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "ma_medrec_001",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-ADMIN-006",
+    "intent": "administrative_request_portal",
+    "risk": "low",
+    "triggers": [
+      "Work note",
+      "School form",
+      "Records copy",
+      "Insurance card update",
+      "admin request portal"
+    ],
+    "script": "I can help with that. I'll send a secure upload link if additional information is needed.",
+    "actions": [
+      "Send secure link",
+      "Create admin task",
+      "Log request type"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "administrative_request_portal",
+      "risk_level": "low",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-ER-007",
+    "intent": "message_emergency_escalation",
+    "risk": "high",
+    "triggers": [
+      "Emergency keywords detected in message",
+      "chest pain message",
+      "shortness of breath portal",
+      "stroke symptoms message"
+    ],
+    "script": "Your symptoms may require urgent evaluation. Please call 911 or go to the nearest emergency room immediately.",
+    "actions": [
+      "Flag urgent",
+      "Notify physician",
+      "Log emergency escalation"
+    ],
+    "hard_stop": "No follow-up questions; no delay.",
+    "metadata": {
+      "intent": "message_emergency_escalation",
+      "risk_level": "high",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-FOLLOW-002",
+    "intent": "clarify_previous_instructions",
+    "risk": "low",
+    "triggers": [
+      "I didn't understand the instructions",
+      "Can you explain what you meant",
+      "clarify instructions",
+      "need clarification"
+    ],
+    "script": "Thank you for reaching out. Let me clarify. I will restate the documented plan only. If unclear, I'll confirm with the doctor and update you.",
+    "actions": [
+      "Reference last visit note",
+      "Provide clarification",
+      "Log clarification sent"
+    ],
+    "hard_stop": "Do not create new diagnosis or change treatment.",
+    "metadata": {
+      "intent": "clarify_previous_instructions",
+      "risk_level": "low",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-MED-001",
+    "intent": "general_medical_question",
+    "risk": "moderate",
+    "triggers": [
+      "I have a question about my blood pressure",
+      "Is this medication safe",
+      "What does this result mean",
+      "medical question portal"
+    ],
+    "script": "Thank you for your message. I understand your concern. If the answer exists in your documented visit plan, I can provide that. If uncertain, I'll review this with the doctor and follow up shortly.",
+    "actions": [
+      "Draft response",
+      "Route to physician if medical interpretation required",
+      "Log message category"
+    ],
+    "hard_stop": "If emergency keywords (chest pain, shortness of breath, severe pain, suicidal ideation) → escalate to MSG-ER-007.",
+    "metadata": {
+      "intent": "general_medical_question",
+      "risk_level": "moderate",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-REF-005",
+    "intent": "referral_request_portal",
+    "risk": "low",
+    "triggers": [
+      "I need a referral",
+      "Can you send me to a cardiologist",
+      "referral via portal",
+      "see a specialist"
+    ],
+    "script": "Thank you. May I ask the reason for the referral? If PPO/Medicare: I'll generate your referral and send it securely. If HMO: This requires insurance authorization. We'll notify you once processed.",
+    "actions": [
+      "Route by insurance logic",
+      "Generate referral OR create task",
+      "Log referral message"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "referral_request_portal",
+      "risk_level": "low",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-RESOLVE-008",
+    "intent": "mark_resolved_documentation",
+    "risk": "low",
+    "triggers": [
+      "Issue completed",
+      "mark resolved",
+      "close message thread",
+      "concern addressed"
+    ],
+    "script": "I'm glad we were able to address your concern. Please let us know if you need anything further.",
+    "actions": [
+      "Mark task as resolved",
+      "Attach final response to chart",
+      "Close message thread",
+      "Log disposition summary"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "mark_resolved_documentation",
+      "risk_level": "low",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-RX-004",
+    "intent": "prescription_question_portal",
+    "risk": "low",
+    "triggers": [
+      "Did you send my refill",
+      "Can I change the pharmacy",
+      "Is this dose correct",
+      "refill status",
+      "medication question portal"
+    ],
+    "script": "I'm reviewing your medication request. If refill status known: Your refill was sent on [date] to [pharmacy]. If pharmacy change: Please confirm the new pharmacy details.",
+    "actions": [
+      "Check refill engine",
+      "Update pharmacy if needed",
+      "Log medication message"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "prescription_question_portal",
+      "risk_level": "low",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "MSG-TRIAGE-003",
+    "intent": "symptom_triage_via_message",
+    "risk": "variable",
+    "triggers": [
+      "I have chest pain",
+      "My stomach hurts",
+      "I feel dizzy",
+      "symptom via message",
+      "not feeling well portal"
+    ],
+    "script": "If emergency (chest pain, shortness of breath, stroke, severe bleeding, suicidal thoughts): This may be urgent. Please call 911 or go to the nearest emergency room immediately. If non-emergent: I'm sorry you're experiencing that. When did this start? Are you having fever, severe pain, or worsening symptoms?",
+    "actions": [
+      "If mild → offer scheduling",
+      "If moderate → route to clinical queue",
+      "Log triage category"
+    ],
+    "hard_stop": "Emergency keywords → immediate 911/ER script; no delay.",
+    "metadata": {
+      "intent": "symptom_triage_via_message",
+      "risk_level": "variable",
+      "department": "messaging",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "PA-002",
+    "intent": "pa_002",
+    "risk": "moderate",
+    "triggers": [
+      "pa 002",
+      "pa 002"
+    ],
+    "script": "to patient “Your insurance has denied the medication. We are preparing an appeal on your behalf.”",
+    "actions": [
+      "Generate appeal letter draft",
+      "Attach chart evidence",
+      "Route to MD for approval",
+      "Update status: Appeal Pending"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pa_002",
+      "risk_level": "moderate",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PA-VISIT-001",
+    "intent": "pa_visit_001",
+    "risk": "low",
+    "triggers": [
+      "Visit completed",
+      "Diagnosis list",
+      "Medication changes",
+      "Orders placed",
+      "Follow-up timeline",
+      "Generate structured summary",
+      "Await physician approval",
+      "Publish to portal",
+      "Post-visit flow"
+    ],
+    "script": "to patient (portal) “Your visit summary is now available in your portal.” Action - Generate structured summary - Await physician approval - Publish to portal - Post-visit flow",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pa_visit_001",
+      "risk_level": "low",
+      "department": "prior_auth",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-001",
+    "intent": "pharm_001",
+    "risk": "low",
+    "triggers": [
+      "pharm 001",
+      "pharm 001"
+    ],
+    "script": "“May I confirm the patient name and date of birth?” “Which medication are you verifying?” Action Check EMR → confirm or route.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_001",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-002",
+    "intent": "pharm_002",
+    "risk": "low",
+    "triggers": [
+      "pharm 002",
+      "pharm 002"
+    ],
+    "script": "“Early refills require physician review. I’ll route this immediately.”",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_002",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-003",
+    "intent": "pharm_003",
+    "risk": "low",
+    "triggers": [
+      "pharm 003",
+      "pharm 003"
+    ],
+    "script": "“Controlled substances require direct physician approval.” Immediate escalation.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_003",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-004",
+    "intent": "pharm_004",
+    "risk": "low",
+    "triggers": [
+      "pharm 004",
+      "pharm 004"
+    ],
+    "script": "“I’ll confirm the dosage and return your call promptly.” Create physician clarification task.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_004",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-005",
+    "intent": "pharm_005",
+    "risk": "low",
+    "triggers": [
+      "PA Brain."
+    ],
+    "script": "“Thank you for informing us. We’ll initiate the prior authorization process.” Trigger PA Brain.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_005",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-006",
+    "intent": "pharm_006",
+    "risk": "low",
+    "triggers": [
+      "pharm 006",
+      "pharm 006"
+    ],
+    "script": "“I’ll notify the physician to review this interaction.” Immediate clinical task.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_006",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-007",
+    "intent": "pharm_007",
+    "risk": "low",
+    "triggers": [
+      "pharm 007",
+      "pharm 007"
+    ],
+    "script": "“I’ll verify whether it was transmitted and resend if necessary.” Check EMR send status.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_007",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "PHARM-008",
+    "intent": "pharm_008",
+    "risk": "low",
+    "triggers": [
+      "pharm 008",
+      "pharm 008"
+    ],
+    "script": "“Controlled medication policies are determined by the prescribing physician.” Route to MD if needed.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "pharm_008",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-002",
+    "intent": "rec_call_002",
+    "risk": "low",
+    "triggers": [
+      "rec call 002",
+      "rec call 002"
+    ],
+    "script": "“I’m sorry you’re experiencing that. When did this start?” “Are you having trouble breathing, swelling, chest pain, or fainting?” If yes → emergency escalation If no → “I’ll notify the doctor so we can review this safely.” Action Urgent clinical task.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rec_call_002",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-004",
+    "intent": "rec_call_004",
+    "risk": "low",
+    "triggers": [
+      "rec call 004",
+      "rec call 004"
+    ],
+    "script": "“I’ll confirm whether your imaging report has been received.” If received: “The doctor will review and we’ll follow up shortly.” If abnormal: Offer visit scheduling.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rec_call_004",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-007",
+    "intent": "rec_call_007",
+    "risk": "low",
+    "triggers": [
+      "rec call 007",
+      "rec call 007"
+    ],
+    "script": "“Are you calling about eligibility, coverage, or authorization?” Collect insurance details. Action Route to eligibility queue.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rec_call_007",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "REC-CALL-008",
+    "intent": "rec_call_008",
+    "risk": "low",
+    "triggers": [
+      "rec call 008",
+      "rec call 008"
+    ],
+    "script": "“May I have the date of service?” “Is this about a copay, deductible, or statement?” Action Route to Biller Brain.",
+    "actions": [
+      "Log request",
+      "Route to appropriate department"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rec_call_008",
+      "risk_level": "low",
+      "department": "billing",
+      "brain": "billing_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-DISC-009",
+    "intent": "rx_disc_009",
+    "risk": "high",
+    "triggers": [
+      "“I stopped taking it.”",
+      "“I don’t want this medication anymore.”",
+      "Flag medication status",
+      "Notify physician",
+      "Offer visit",
+      "Log discontinuation report"
+    ],
+    "script": "“I understand. May I ask why you stopped the medication?” If side effects → route to clinical review If preference → schedule discussion If high-risk med → urgent escalation",
+    "actions": [
+      "Flag medication status",
+      "Notify physician",
+      "Offer visit",
+      "Log discontinuation report"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rx_disc_009",
+      "risk_level": "high",
+      "department": "medical_assistant",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-ESC-007",
+    "intent": "rx_esc_007",
+    "risk": "high",
+    "triggers": [
+      "Multiple medications",
+      "Polypharmacy concern",
+      "Drug interaction warning",
+      "Significant side effects reported",
+      "Clinical escalation",
+      "Flag drug interaction",
+      "Create high-priority review task"
+    ],
+    "script": "“This refill needs careful review to ensure safety. I’m escalating this to the doctor.”",
+    "actions": [
+      "Clinical escalation",
+      "Flag drug interaction",
+      "Create high-priority review task"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rx_esc_007",
+      "risk_level": "high",
+      "department": "medical_assistant",
+      "brain": "medical_assistant"
+    }
+  },
+  {
+    "scenario_id": "RX-LABS-001",
+    "intent": "rx_labs_001",
+    "risk": "moderate",
+    "triggers": [
+      "Send 30–90 day refill",
+      "Create lab order task",
+      "Notify patient of lab requirement",
+      "Log decision"
+    ],
+    "script": "“I’ve sent a short refill and scheduled a reminder for your lab work to keep everything safe.”",
+    "actions": [
+      "Send 30–90 day refill",
+      "Create lab order task",
+      "Notify patient of lab requirement",
+      "Log decision"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "rx_labs_001",
+      "risk_level": "moderate",
+      "department": "pharmacy",
+      "brain": "physician_assistant"
+    }
+  },
+  {
+    "scenario_id": "SAFE-911-008",
+    "intent": "safe_911_008",
+    "risk": "high",
+    "triggers": [
+      "severe breathing difficulty",
+      "unconscious patient",
+      "severe bleeding",
+      "stroke symptoms",
+      "cardiac symptoms",
+      "stay with the patient",
+      "unlock door for responders if possible",
+      "emergency escalation",
+      "log event"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "emergency escalation",
+      "log event"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "safe_911_008",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SAFE-AFTERHOURS-007",
+    "intent": "safe_afterhours_007",
+    "risk": "high",
+    "triggers": [
+      "route to on-call physician if applicable",
+      "log after-hours contact"
+    ],
+    "script": "“Our office is currently closed.” “If this is a medical emergency, please call 911.” “For urgent issues that cannot wait, please contact the on-call provider.”",
+    "actions": [
+      "route to on-call physician if applicable",
+      "log after-hours contact"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "safe_afterhours_007",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SAFE-ALLERGY-003",
+    "intent": "safe_allergy_003",
+    "risk": "high",
+    "triggers": [
+      "throat swelling",
+      "difficulty breathing",
+      "hives + breathing difficulty",
+      "severe allergic reaction",
+      "anaphylaxis",
+      "emergency escalation",
+      "log allergic reaction event"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "emergency escalation",
+      "log allergic reaction event"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "safe_allergy_003",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SAFE-CHEST-001",
+    "intent": "safe_chest_001",
+    "risk": "high",
+    "triggers": [
+      "chest pain",
+      "chest pressure",
+      "pain radiating to arm or jaw",
+      "chest tightness",
+      "shortness of breath with chest discomfort",
+      "interrupt current workflow",
+      "provide emergency instruction",
+      "notify physician dashboard",
+      "log emergency event"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "interrupt current workflow",
+      "provide emergency instruction",
+      "notify physician dashboard",
+      "log emergency event"
+    ],
+    "hard_stop": "Doctor Twin must not continue triage questions once cardiac emergency is suspected.",
+    "metadata": {
+      "intent": "safe_chest_001",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "emergency_safety_layer"
+    }
+  },
+  {
+    "scenario_id": "SAFE-LABCRIT-006",
+    "intent": "safe_labcrit_006",
+    "risk": "high",
+    "triggers": [
+      "dangerously high potassium",
+      "critical glucose level",
+      "severe anemia",
+      "abnormal troponin",
+      "notify physician immediately",
+      "attempt patient contact (multiple attempts)",
+      "log escalation"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "notify physician immediately",
+      "attempt patient contact (multiple attempts)",
+      "log escalation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "safe_labcrit_006",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SAFE-OD-005",
+    "intent": "safe_od_005",
+    "risk": "high",
+    "triggers": [
+      "overdose",
+      "took too many pills",
+      "accidental medication ingestion",
+      "medication poisoning",
+      "provide Poison Control contact",
+      "log toxic exposure event"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "provide Poison Control contact",
+      "log toxic exposure event"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "safe_od_005",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SAFE-STROKE-002",
+    "intent": "safe_stroke_002",
+    "risk": "high",
+    "triggers": [
+      "facial drooping",
+      "sudden weakness",
+      "numbness on one side",
+      "slurred speech",
+      "confusion",
+      "sudden vision changes",
+      "Face drooping",
+      "Arm weakness",
+      "Speech difficulty",
+      "Time to call 911",
+      "emergency escalation",
+      "notify physician",
+      "log event"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "emergency escalation",
+      "notify physician",
+      "log event"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "safe_stroke_002",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SAFE-SUICIDE-004",
+    "intent": "safe_suicide_004",
+    "risk": "high",
+    "triggers": [
+      "I want to die",
+      "suicidal thoughts",
+      "thinking about harming myself",
+      "life is not worth living",
+      "provide suicide hotline information",
+      "escalate to physician if within practice interaction",
+      "log crisis event"
+    ],
+    "script": "I'll help you with that. Let me process your request.",
+    "actions": [
+      "provide suicide hotline information",
+      "escalate to physician if within practice interaction",
+      "log crisis event"
+    ],
+    "hard_stop": "Doctor Twin must not attempt therapy or counseling beyond supportive language.",
+    "metadata": {
+      "intent": "safe_suicide_004",
+      "risk_level": "high",
+      "department": "safety",
+      "brain": "safety"
+    }
+  },
+  {
+    "scenario_id": "SPA-BEFOREAFTER-005",
+    "intent": "spa_beforeafter_005",
+    "risk": "low",
+    "triggers": [
+      "“Can I see before and after results?”",
+      "“What results should I expect?”",
+      "consent-approved",
+      "educational",
+      "not misleading",
+      "show approved gallery",
+      "offer consultation"
+    ],
+    "script": "“We can share educational examples of treatment outcomes.” “Individual results may vary depending on skin type and treatment plan.” Compliance Rule Images must be: - consent-approved - educational - not misleading",
+    "actions": [
+      "show approved gallery",
+      "offer consultation"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "spa_beforeafter_005",
+      "risk_level": "low",
+      "department": "prior_auth",
+      "brain": "medspa"
+    }
+  },
+  {
+    "scenario_id": "SPA-BOOK-007",
+    "intent": "spa_book_007",
+    "risk": "low",
+    "triggers": [
+      "facial treatment",
+      "IV therapy",
+      "consultation",
+      "service type",
+      "provider availability",
+      "preparation requirements",
+      "book appointment",
+      "send confirmation",
+      "provide preparation instructions"
+    ],
+    "script": "“I can help schedule your appointment.” “Do you prefer morning or afternoon availability?” Scheduling Steps Confirm: - service type - provider availability - preparation requirements",
+    "actions": [
+      "book appointment",
+      "send confirmation",
+      "provide preparation instructions"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "spa_book_007",
+      "risk_level": "low",
+      "department": "prior_auth",
+      "brain": "medspa"
+    }
+  },
+  {
+    "scenario_id": "SPA-IV-003",
+    "intent": "spa_iv_003",
+    "risk": "moderate",
+    "triggers": [
+      "hydration therapy",
+      "vitamin IV",
+      "recovery IV",
+      "explain available IV options",
+      "confirm eligibility screening",
+      "offer scheduling"
+    ],
+    "script": "“IV hydration therapy delivers fluids and vitamins directly into the bloodstream to support hydration and wellness.” “Your provider will determine the most appropriate formula for your needs.”",
+    "actions": [
+      "explain available IV options",
+      "confirm eligibility screening",
+      "offer scheduling"
+    ],
+    "hard_stop": "Medical screening may be required before IV therapy.",
+    "metadata": {
+      "intent": "spa_iv_003",
+      "risk_level": "moderate",
+      "department": "prior_auth",
+      "brain": "medspa"
+    }
+  },
+  {
+    "scenario_id": "SPA-MEMBER-004",
+    "intent": "spa_member_004",
+    "risk": "low",
+    "triggers": [
+      "“Do you have membership plans?”",
+      "“How does the membership work?”",
+      "service discounts",
+      "priority scheduling",
+      "monthly treatment credits",
+      "display membership tiers",
+      "provide pricing overview",
+      "offer enrollment instructions"
+    ],
+    "script": "“Our membership plans provide regular treatments and additional benefits at a monthly rate.” Explain typical benefits: - service discounts - priority scheduling - monthly treatment credits",
+    "actions": [
+      "display membership tiers",
+      "provide pricing overview",
+      "offer enrollment instructions"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "spa_member_004",
+      "risk_level": "low",
+      "department": "prior_auth",
+      "brain": "medspa"
+    }
+  },
+  {
+    "scenario_id": "SPA-PACKAGE-006",
+    "intent": "spa_package_006",
+    "risk": "low",
+    "triggers": [
+      "“How much does a package cost?”",
+      "“Do you have bundled pricing?”",
+      "number of sessions",
+      "total price estimate",
+      "payment options",
+      "consultation",
+      "customization",
+      "retrieve pricing menu",
+      "explain package structure",
+      "log inquiry"
+    ],
+    "script": "“We offer package pricing for certain treatments, which may provide savings compared to individual sessions.” Explain: - number of sessions - total price estimate - payment options",
+    "actions": [
+      "retrieve pricing menu",
+      "explain package structure",
+      "log inquiry"
+    ],
+    "hard_stop": "Final pricing may depend on:",
+    "metadata": {
+      "intent": "spa_package_006",
+      "risk_level": "low",
+      "department": "prior_auth",
+      "brain": "medspa"
+    }
+  },
+  {
+    "scenario_id": "SPA-RECOMMEND-002",
+    "intent": "spa_recommend_002",
+    "risk": "moderate",
+    "triggers": [
+      "“What treatment should I get?”",
+      "“What would help my skin?”",
+      "suggest consultation appointment",
+      "gather patient goals",
+      "route to provider consultation"
+    ],
+    "script": "“The best treatment depends on your goals and skin condition.” “We typically recommend scheduling a consultation so the provider can assess your needs.”",
+    "actions": [
+      "suggest consultation appointment",
+      "gather patient goals",
+      "route to provider consultation"
+    ],
+    "hard_stop": "Doctor Twin must not prescribe aesthetic treatments without evaluation.",
+    "metadata": {
+      "intent": "spa_recommend_002",
+      "risk_level": "moderate",
+      "department": "prior_auth",
+      "brain": "medspa"
+    }
+  },
+  {
+    "scenario_id": "SPA-SERVICE-001",
+    "intent": "explain_available_services",
+    "risk": "low",
+    "triggers": [
+      "“What services do you offer?”",
+      "“What does this treatment do?”",
+      "“Can you tell me about this procedure?”",
+      "display service description",
+      "provide expected benefits",
+      "offer consultation scheduling"
+    ],
+    "script": "“I’d be happy to explain our available services.” Provide simple overview of treatment purpose. Example: “Hydrafacial is a non-invasive skin treatment designed to cleanse, exfoliate, and hydrate the skin.”",
+    "actions": [
+      "display service description",
+      "provide expected benefits",
+      "offer consultation scheduling"
+    ],
+    "hard_stop": null,
+    "metadata": {
+      "intent": "explain_available_services",
+      "risk_level": "low",
+      "department": "prior_auth",
+      "brain": "wellness_services_assistant"
+    }
   }
 ]
